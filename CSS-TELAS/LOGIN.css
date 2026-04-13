@@ -1,0 +1,324 @@
+/* ===== VARIÁVEIS DE COR ===== */
+:root {
+    --cyan: #2bf0ff;
+    --green: #7df78e;
+    --bg-dark: #060b16;
+    --surface: rgba(11, 19, 34, 0.92);
+    --text: #eef6ff;
+    --muted: #8dc9cf;
+    --border: rgba(43, 240, 255, 0.18);
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+    --error: #ff6b6b;
+}
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY & FUNDO ===== */
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(43, 240, 255, 0.08), transparent 15%),
+                linear-gradient(180deg, #06101c 0%, #070a13 45%, #02050a 100%);
+    color: var(--text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+/* ===== CONTAINER DO LOGIN ===== */
+.login-container {
+    width: min(420px, 100%);
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== HEADER ===== */
+.login-header {
+    text-align: center;
+    margin-bottom: 42px;
+}
+
+.app-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--cyan);
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow: 0 0 30px rgba(43, 240, 255, 0.3);
+}
+
+.app-subtitle {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* ===== FORMULÁRIO ===== */
+.login-form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 38px 32px;
+    box-shadow: var(--shadow), inset 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    margin-bottom: 24px;
+}
+
+/* ===== FORM GROUP ===== */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(43, 240, 255, 0.16);
+    border-radius: 16px;
+    background: rgba(1, 7, 16, 0.9);
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.form-group input[type="email"]::placeholder,
+.form-group input[type="password"]::placeholder {
+    color: rgba(238, 246, 255, 0.4);
+}
+
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 30px rgba(43, 240, 255, 0.18);
+    transform: translateY(-1px);
+}
+
+/* ===== PASSWORD GROUP COM TOGGLE ===== */
+.password-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-group input {
+    flex: 1;
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 1.1rem;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    outline: none;
+}
+
+.toggle-password:hover {
+    color: var(--cyan);
+}
+
+/* ===== FORM OPTIONS (LEMBRAR E ESQUECEU) ===== */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+    font-size: 0.85rem;
+    gap: 12px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.remember-me input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: var(--cyan);
+    border-radius: 4px;
+}
+
+.forgot-password {
+    color: var(--cyan);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--green);
+    text-shadow: 0 0 12px rgba(43, 240, 255, 0.4);
+}
+
+/* ===== BOTÃO LOGIN ===== */
+.btn-login {
+    width: 100%;
+    padding: 16px 0;
+    background: linear-gradient(135deg, var(--cyan), var(--green));
+    border: none;
+    border-radius: 16px;
+    color: #061116;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 16px 40px rgba(43, 240, 255, 0.25);
+}
+
+.btn-login:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 50px rgba(43, 240, 255, 0.35);
+}
+
+.btn-login:active {
+    transform: translateY(-1px);
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 32px 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(43, 240, 255, 0.3), transparent);
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    position: relative;
+    background: var(--surface);
+    padding: 0 12px;
+}
+
+/* ===== LOGIN FOOTER ===== */
+.login-footer {
+    text-align: center;
+    padding: 24px 32px;
+    background: rgba(10, 18, 34, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.login-footer p {
+    color: var(--text);
+    margin: 0;
+}
+
+.link-signup {
+    color: var(--cyan);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.link-signup:hover {
+    color: var(--green);
+    text-shadow: 0 0 12px rgba(43, 240, 255, 0.4);
+}
+
+/* ===== LINKS ADICIONAIS ===== */
+.additional-links {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.additional-links a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.additional-links a:hover {
+    color: var(--cyan);
+}
+
+.separator {
+    opacity: 0.5;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 480px) {
+    .app-title {
+        font-size: 1.8rem;
+    }
+
+    .login-form {
+        padding: 28px 20px;
+    }
+
+    .form-options {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .login-footer {
+        padding: 18px 20px;
+    }
+}

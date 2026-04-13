@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TREINO OTIMIZADO</title>
+    <link rel="stylesheet" href="../CSS-TELAS/style-home.css">
+    
+    <!-- Scripts de autenticação -->
+    <script src="../SCRIPTS/auth.js"></script>
+    <script src="../SCRIPTS/navegacao.js"></script>
+    <script>
+        // Verificar autenticação ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            redirecionarSeNaoAutenticado();
+        });
+    </script>
+</head>
+<body>
+    <h1 class="page-title">TREINO OTIMIZADO</h1>
+
+    <!-- Formulário para coleta de dados do usuário para gerar treino personalizado -->
+    <form id="dadosPessoaisForm" action="/submit-dados-pessoais" method="post">
+        <fieldset class="section-group">
+            <legend>Dados Pessoais</legend>
+            <!-- Campo para nome do usuário -->
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <!-- Campo para idade -->
+            <label for="idade">Idade:</label>
+            <input type="number" id="idade" name="idade" required>
+
+            <!-- Seleção de gênero -->
+            <label for="genero">Gênero:</label>
+            <select id="genero" name="genero">
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="outro">Outro</option>
+            </select>
+
+            <!-- Campo para altura em centímetros -->
+            <label for="altura">Altura (cm):</label>
+            <input type="number" id="altura" name="altura" required>
+
+            <!-- Campo para peso em quilogramas -->
+            <label for="peso">Peso (kg):</label>
+            <input type="number" id="peso" name="peso" required>
+
+            <!-- Seleção do nível de condicionamento físico -->
+            <label for="nivel">Nível de Condicionamento Físico:</label>
+            <select id="nivel" name="nivel">
+                <option value="iniciante">Iniciante</option>
+                <option value="intermediario">Intermediário</option>
+                <option value="avancado">Avançado</option>
+                <option value="atleta">Atleta</option>
+            </select>
+        </fieldset>
+
+         <div class="button-row">
+            <button type="submit" class="button-link">Próxima: Anamnese</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('dadosPessoaisForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Coletar dados do formulário
+            const formData = {
+                nome: document.getElementById('nome').value,
+                idade: document.getElementById('idade').value,
+                genero: document.getElementById('genero').value,
+                altura: document.getElementById('altura').value,
+                peso: document.getElementById('peso').value,
+                nivel: document.getElementById('nivel').value
+            };
+
+            try {
+                console.log('Enviando dados:', formData);
+                
+                const response = await fetch('/submit-dados-pessoais', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                console.log('Resposta do servidor:', result);
+
+                if (result.success) {
+                    // Salvar progresso usando sistema de navegação
+                    navegacao.salvarProgresso('dados-pessoais', { id: result.id });
+                    console.log('Progresso salvo, ID:', result.id);
+                    
+                    // Redirecionar diretamente para ANAMNESE
+                    window.location.href = '/ANAMNESE.html';
+                } else {
+                    console.error('Erro do servidor:', result.error);
+                    alert('Erro ao salvar dados: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                alert('Erro ao enviar dados. Tente novamente.');
+            }
+        });
+    </script>
+
+    <!-- Script para gerenciar logout -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se está autenticado (já feito no head)
+            // Lógica de logout pode ser adicionada aqui se necessário
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TREINO OTIMIZADO</title>
+    <link rel="stylesheet" href="../CSS-TELAS/LOGIN.css">
+    <script src="../SCRIPTS/auth.js"></script>
+    
+    <!-- Redirecionar se já está autenticado -->
+    
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Logo/Título -->
+        <div class="login-header">
+            <h1 class="app-title">TREINO OTIMIZADO</h1>
+            <p class="app-subtitle">Sistema de Treinamento Inteligente</p>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="loginForm" class="login-form">
+            <!-- Campo de Email/Usuário -->
+            <div class="form-group">
+                <label for="email">Email ou Usuário</label>
+                <input type="email" id="email" name="email" placeholder="seu.email@example.com" required
+                    autocomplete="username">
+            </div>
+
+            <!-- Campo de Senha -->
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <div class="password-group">
+                    <input type="password" id="senha" name="senha" placeholder="••••••••" required
+                        autocomplete="current-password">
+                    <button type="button" class="toggle-password" id="togglePassword">
+                        <span class="icon">👁️</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lembrar senha -->
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="lembrar" id="lembrar">
+                    Lembrar-me neste dispositivo
+                </label>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+
+            <!-- Botão de Login -->
+            <button type="submit" class="btn-login">ENTRAR</button>
+        </form>
+      
+
+        <!-- Divider -->
+        <div class="divider">
+            <span>ou</span>
+        </div>
+
+        <!-- Cadastro -->
+        <div class="login-footer">
+            <p>Não tem uma conta?
+                <a href="#" class="link-signup">Crie uma agora</a>
+            </p>
+        </div>
+
+        <!-- Links adicionais -->
+        <div class="additional-links">
+            <a href="#">Política de Privacidade</a>
+            <span class="separator">•</span>
+            <a href="#">Termos de Uso</a>
+            <span class="separator">•</span>
+            <a href="#">Suporte</a>
+        </div>
+    </div>
+    
+    <button type="submit" class="button-link"> </button>
+    </div>
+
+    <!-- Script para mostrar/esconder senha -->
+    <script src="../SCRIPTS/LOGIN.js"></script>
+</body>
+
+</html>

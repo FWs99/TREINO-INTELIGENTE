@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cadastros</title>
+    <link rel="stylesheet" href="../CSS-TELAS/style-home.css">
+    <style>
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(43, 240, 255, 0.2);
+        }
+
+        .admin-table th {
+            background: rgba(43, 240, 255, 0.1);
+            color: var(--cyan);
+            font-weight: 700;
+        }
+
+        .admin-table tr:hover {
+            background: rgba(43, 240, 255, 0.05);
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-complete {
+            background: rgba(125, 247, 142, 0.2);
+            color: #7df78e;
+        }
+
+        .status-incomplete {
+            background: rgba(255, 100, 100, 0.2);
+            color: #ff6464;
+        }
+
+        .image-preview {
+            max-width: 60px;
+            max-height: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .image-preview:hover {
+            transform: scale(1.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            background: rgba(43, 240, 255, 0.1);
+            color: var(--text);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--cyan);
+            color: #061116;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Administração - Cadastros</h1>
+
+    <div class="form" style="max-width: 1200px;">
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterCadastros('all')">Todos</button>
+            <button class="filter-btn" onclick="filterCadastros('complete')">Completos</button>
+            <button class="filter-btn" onclick="filterCadastros('incomplete')">Incompletos</button>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Data Cadastro</th>
+                    <th>Anamnese</th>
+                    <th>Postural</th>
+                    <th>Imagens</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="cadastrosTable">
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 40px;">
+                        Carregando cadastros...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal para visualizar imagens -->
+    <div id="imageModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="max-width: 90%; max-height: 90%;">
+            <img id="modalImage" src="" style="max-width: 100%; max-height: 100%; border-radius: 8px;">
+            <button onclick="closeModal()" style="position: absolute; top: 20px; right: 20px; background: var(--cyan); color: #061116; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        let allCadastros = [];
+
+        async function loadCadastros() {
+            try {
+                const response = await fetch('/api/cadastros');
+                const cadastros = await response.json();
+                allCadastros = cadastros;
+                renderTable(cadastros);
+            } catch (error) {
+                console.error('Erro ao carregar cadastros:', error);
+                document.getElementById('cadastrosTable').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #ff6464;">
+                            Erro ao carregar cadastros
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function renderTable(cadastros) {
+            const tbody = document.getElementById('cadastrosTable');
+
+            if (cadastros.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center;">
+                            Nenhum cadastro encontrado
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = cadastros.map(cadastro => {
+                const hasAnamnese = cadastro.habitos_alimentares || cadastro.consumo_alcool;
+                const hasPostural = cadastro.imagem_frontal || cadastro.imagem_lateral_direita;
+                const imagensCount = [cadastro.imagem_frontal, cadastro.imagem_lateral_direita, cadastro.imagem_lateral_esquerda, cadastro.imagem_costas].filter(img => img).length;
+
+                return `
+                    <tr>
+                        <td>${cadastro.id}</td>
+                        <td>${cadastro.nome}</td>
+                        <td>${cadastro.idade} anos</td>
+                        <td>${new Date(cadastro.data_cadastro).toLocaleDateString('pt-BR')}</td>
+                        <td>
+                            <span class="status-badge ${hasAnamnese ? 'status-complete' : 'status-incomplete'}">
+                                ${hasAnamnese ? 'Completa' : 'Pendente'}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge ${hasPostural ? 'status-complete' : 'status-incomplete'}">
+                                ${hasPostural ? 'Completa' : 'Pendente'}
+                            </span>
+                        </td>
+                        <td>
+                            ${imagensCount > 0 ? `
+                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                    ${cadastro.imagem_frontal ? `<img src="/uploads/${cadastro.imagem_frontal}" class="image-preview" onclick="showImage('/uploads/${cadastro.imagem_frontal}')" title="Frontal">` : ''}
+                                    ${cadastro.imagem_lateral_direita ? `<img src="/uploads/${cadastro.imagem_lateral_direita}" class="image-preview" onclick="showImage('/uploads/${cadastro.imagem_lateral_direita}')" title="Lateral Direita">` : ''}
+                                    ${cadastro.imagem_lateral_esquerda ? `<img src="/uploads/${cadastro.imagem_lateral_esquerda}" class="image-preview" onclick="showImage('/uploads/${cadastro.imagem_lateral_esquerda}')" title="Lateral Esquerda">` : ''}
+                                    ${cadastro.imagem_costas ? `<img src="/uploads/${cadastro.imagem_costas}" class="image-preview" onclick="showImage('/uploads/${cadastro.imagem_costas}')" title="Costas">` : ''}
+                                </div>
+                            ` : 'Nenhuma'}
+                        </td>
+                        <td>
+                            <button onclick="viewDetails(${cadastro.id})" style="padding: 6px 12px; background: var(--cyan); color: #061116; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem;">
+                                Ver Detalhes
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterCadastros(type) {
+            // Atualizar botões ativos
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let filtered = allCadastros;
+
+            if (type === 'complete') {
+                filtered = allCadastros.filter(c => {
+                    const hasAnamnese = c.habitos_alimentares || c.consumo_alcool;
+                    const hasPostural = c.imagem_frontal || c.imagem_lateral_direita;
+                    return hasAnamnese && hasPostural;
+                });
+            } else if (type === 'incomplete') {
+                filtered = allCadastros.filter(c => {
+                    const hasAnamnese = c.habitos_alimentares || c.consumo_alcool;
+                    const hasPostural = c.imagem_frontal || c.imagem_lateral_direita;
+                    return !hasAnamnese || !hasPostural;
+                });
+            }
+
+            renderTable(filtered);
+        }
+
+        function showImage(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function viewDetails(id) {
+            const cadastro = allCadastros.find(c => c.id === id);
+            if (cadastro) {
+                alert(`Detalhes do cadastro #${id}:\n\nNome: ${cadastro.nome}\nIdade: ${cadastro.idade}\n\nAnamnese: ${cadastro.habitos_alimentares ? 'Completa' : 'Pendente'}\nPostural: ${cadastro.imagem_frontal ? 'Completa' : 'Pendente'}\n\nClique em OK para ver mais detalhes no console.`);
+                console.log('Cadastro completo:', cadastro);
+            }
+        }
+
+        // Fechar modal ao clicar fora
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('imageModal')) {
+                closeModal();
+            }
+        });
+
+        // Carregar cadastros ao iniciar
+        loadCadastros();
+
+        // Atualizar a cada 30 segundos
+        setInterval(loadCadastros, 30000);
+    </script>
+</body>
+</html>

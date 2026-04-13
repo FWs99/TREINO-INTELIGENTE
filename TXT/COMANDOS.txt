@@ -1,0 +1,81 @@
+# 💻 COMANDOS ESSENCIAIS - TREINO OTIMIZADO
+
+## INSTALAÇÃO E INÍCIO
+```cmd
+# Instalar dependências
+npm install
+
+# Iniciar servidor
+npm start
+
+# Desenvolvimento (reinicia automático)
+npm run dev
+```
+
+## VERIFICAÇÕES
+```cmd
+# Verificar Node.js
+node --version
+
+# Verificar npm
+npm --version
+
+# Listar arquivos
+dir
+
+# Verificar se servidor está rodando
+netstat -ano | findstr :3000
+```
+
+## BANCO DE DADOS
+```cmd
+# Abrir banco SQLite
+sqlite3 database.db
+
+# Ver tabelas
+.schema
+
+# Ver dados
+SELECT * FROM dados_pessoais;
+
+# Inserir dados de exemplo
+.read exemplo-dados.sql
+```
+
+## DEPURAÇÃO
+```cmd
+# Limpar cache npm
+npm cache clean --force
+
+# Reinstalar dependências
+rmdir /s node_modules
+npm install
+
+# Ver logs do servidor
+npm start > server.log 2>&1
+```
+
+## SERVIDOR
+```cmd
+# Parar servidor
+Ctrl+C
+
+# Mudar porta (no server.js)
+const PORT = 3001;
+
+# Ver processos na porta 3000
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+```
+
+## NAVEGADOR
+- Site: http://localhost:3000
+- Admin: http://localhost:3000/admin.html
+- API: http://localhost:3000/api/cadastros
+
+## ARQUIVOS IMPORTANTES
+- server.js (servidor)
+- database.js (banco)
+- package.json (dependências)
+- *.html (páginas)
+- *.css (estilos)

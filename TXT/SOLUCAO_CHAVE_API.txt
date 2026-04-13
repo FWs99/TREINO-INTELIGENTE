@@ -1,0 +1,119 @@
+🔑 RESOLVENDO ERRO DE CHAVE DE API INVÁLIDA
+============================================
+
+## ❌ Erro Recebido:
+"API key not valid. Please pass a valid API key."
+
+## 🔍 Possíveis Causas:
+
+1. ❌ Chave copiada incorretamente (faltam/sobrando caracteres)
+2. ❌ Espaços em branco antes ou depois
+3. ❌ Chave expirada ou não ativada
+4. ❌ Chave foi para lixeira/desativada
+
+---
+
+## ✅ SOLUÇÃO PASSO A PASSO
+
+### Passo 1: Gerar Uma Nova Chave (Mais Rápido)
+
+1. Abra: https://ai.google.dev/
+2. Faça login com seu Gmail
+3. Se a chave antiga estiver lá, **CLIQUE EM DELETAR** (ícone de lixeira)
+4. Clique em **"Create API Key"**
+5. Uma nova chave será criada
+
+### Passo 2: Copiar a Chave Corretamente
+
+1. A chave aparecerá em um campo de texto
+2. **Clique em "Copy"** (botão ao lado)
+3. A chave será copiada automaticamente
+
+### Passo 3: Usar a Chave no Sistema
+
+1. Volte a http://localhost:3000
+2. Complete a avaliação (Dados → Anamnese → Postura)
+3. Será redirecionado para TREINO.html
+4. Cole a chave no campo
+5. Clique em "Salvar Chave"
+6. Tente novamente
+
+---
+
+## 🎯 Checklist da Chave
+
+Antes de usar, verifique:
+
+✅ **Começar com**: `AIzaSy...` (sempre assim)
+✅ **Comprimento**: ~40 caracteres
+✅ **Sem espaços** antes ou depois
+✅ **Sem quebras** de linha
+✅ **Criada recentemente** (hoje ou ontem)
+✅ **Não deletada** no Google AI Studio
+
+---
+
+## 🆘 Passo Extra: Testar a Chave
+
+Para confirmar que a chave é válida:
+
+1. Abra: https://ai.google.dev/
+2. Faça login
+3. Vá para **"API keys"** ou **"Keys"**
+4. Procure sua chave naquela página
+5. Se estiver lá com ✅, a chave é válida
+6. Se houver ⚠️ ou 🚫, a chave está com problema
+
+---
+
+## 🔄 Se Ainda Não Funcionar
+
+### Opção 1: Usar .env (Recomendado para Desenvolvedores)
+1. Abra: `.env` (na pasta do projeto)
+2. Encontre: `GEMINI_API_KEY=sua_chave_aqui`
+3. Substitua por: `GEMINI_API_KEY=AIzaSy...` (sua chave real)
+4. Salve (Ctrl+S)
+5. **Reinicie o servidor**: Execute `start.bat` novamente
+6. Tente de novo sem precisar colar a chave
+
+### Opção 2: Verificar Permissões
+1. No Google AI Studio
+2. Verifique se a chave tem permissão para "Generative AI"
+3. Se não, gere uma nova chave
+
+---
+
+## 📊 Resumo Rápido
+
+| Problema | Solução |
+|----------|---------|
+| Chave inválida | Delete e crie uma nova em ai.google.dev |
+| Espaços em branco | Clique em "Copy" (não copie manualmente) |
+| Chave expirada | Gere uma nova em ai.google.dev |
+| Não funciona mesmo | Use arquivo .env (veja opção 1) |
+
+---
+
+## 💡 Dica Ouro
+
+Se você continuar tendo problemas, use o **arquivo .env**:
+
+```
+GEMINI_API_KEY=AIzaSy_sua_chave_completa_aqui
+```
+
+Assim não precisa colar no navegador. Mais seguro e prático! 🔒
+
+---
+
+## 🔗 Links Úteis
+
+- Google AI Studio: https://ai.google.dev/
+- Documentação: https://ai.google.dev/tutorials/python_quickstart
+- Suporte: https://support.google.com/
+
+---
+
+**Problema resolvido? Parabéns!** 🎉
+
+Se tiver dúvidas, volte aqui e tente novamente!

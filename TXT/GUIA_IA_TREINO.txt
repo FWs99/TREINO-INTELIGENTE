@@ -1,0 +1,174 @@
+📚 GUIA COMPLETO - GERAÇÃO DE TREINO COM IA
+=============================================
+
+## 🎯 Objetivo Final
+
+Após completar a avaliação (Dados Pessoais → Anamnese → Análise Postural), o sistema utilizará
+Inteligência Artificial (Google Gemini) para gerar um plano de treino personalizado baseado em
+dados científicos atuais.
+
+## 🚀 Como Funciona o Fluxo Completo
+
+### 1️⃣ DADOS PESSOAIS (HOME.html)
+   └─ Preencha: Nome, Idade, Gênero, Altura, Peso, Nível de Condicionamento
+
+### 2️⃣ ANAMNESE (ANAMNESE.html)
+   └─ Preencha: Hábitos alimentares, Consumo de álcool, Dores, Pressão, Sono, etc.
+
+### 3️⃣ ANÁLISE POSTURAL (POSTURA.html)
+   └─ Preencha: Desvios posturais
+   └─ Carregue: 4 Fotos (Frontal, Lateral Direita, Lateral Esquerda, Costas)
+
+### 4️⃣ GERAÇÃO DO TREINO (TREINO.html) ⭐ NOVO
+   └─ Sistema reúne TODOS os dados
+   └─ Envia para Google Gemini
+   └─ Gera plano de treino personalizado
+   └─ Exibe na tela em formato legível
+
+---
+
+## 📋 Como Obter a Chave de API do Google Gemini
+
+### Passo 1: Acessar Google AI Studio
+```
+Acesse: https://ai.google.dev/
+```
+
+### Passo 2: Fazer Login com Google
+- Clique em "Sign in"
+- Use sua conta Google (crie uma se não tiver)
+
+### Passo 3: Gerar Chave de API
+- Na página inicial, procure por "Get API key" ou "API keys"
+- Clique em "Create API key"
+- A chave será gerada automaticamente
+
+### Passo 4: Copiar a Chave
+- A chave aparecerá como um texto longo (ex: AIzaSy...)
+- Clique em "Copy" para copiar
+
+### Passo 5: Usar a Chave no Sistema
+- Acesse: http://localhost:3000/TREINO.html
+- Cole a chave no campo "Chave de API do Google Gemini"
+- Clique em "Salvar Chave"
+
+---
+
+## 🔐 Segurança da Chave de API
+
+⚠️ IMPORTANTE:
+- A chave é armazenada localmente no navegador (localStorage)
+- NÃO é enviada a servidores terceirizados
+- Mantenha sua chave em sigilo
+
+---
+
+## 📊 O Que o Plano de Treino Inclui
+
+O plano gerado pela IA contém:
+
+✅ **ANÁLISE INICIAL**
+   - Avaliação do perfil físico
+   - Identificação de limitações e pontos fortes
+   - Análise de fatores de risco
+
+✅ **ESTRUTURA DO TREINO**
+   - Duração e frequência
+   - Tipo de exercícios (força, cardio, flexibilidade)
+   - Progressão ao longo do tempo
+
+✅ **EXERCÍCIOS ESPECÍFICOS**
+   - Descrição completa
+   - Séries, repetições e descanso
+   - Adaptações para desvios posturais
+
+✅ **RECOMENDAÇÕES GERAIS**
+   - Alimentação personalizada
+   - Hidratação
+   - Descanso e recuperação
+   - Prevenção de lesões
+
+✅ **ACOMPANHAMENTO**
+   - Como medir progresso
+   - Quando fazer reavaliação
+
+---
+
+## 🎬 Passo a Passo de Uso
+
+### Primeira Vez:
+1. Complete a avaliação (todas as 3 etapas)
+2. Será redirecionado para TREINO.html
+3. Configure a chave de API
+4. O treino será gerado automaticamente
+
+### Subsequentes:
+1. Complete a avaliação
+2. Será redirecionado para TREINO.html
+3. Se a chave está salva, o treino é gerado automaticamente
+4. Se não, insira a chave novamente
+
+---
+
+## 🔧 Solução de Problemas
+
+### "Erro ao gerar treino: Chave inválida"
+- Verifique se a chave foi copiada corretamente
+- Acesse https://ai.google.dev/ e gere uma nova chave
+- Tente novamente
+
+### "Nenhum dado pessoal encontrado"
+- Certifique-se de completar todas as 3 etapas
+- O sistema usa os dados mais recentes
+
+### "Erro ao conectar ao servidor"
+- Verifique se o servidor está rodando em localhost:3000
+- Reinicie o servidor: execute start.bat
+
+---
+
+## 📁 Arquivos Relacionados
+
+```
+.env                    ← Armazena GEMINI_API_KEY
+ai-treino.js            ← Módulo de integração com IA
+TREINO.html             ← Página de exibição do treino
+POSTURA.html            ← Modificado para redirecionar a TREINO.html
+server.js               ← Contém endpoint /api/gerar-treino
+```
+
+---
+
+## 💾 Armazenamento de Dados
+
+- ✅ Dados pessoais: database.db
+- ✅ Anamnese: database.db
+- ✅ Fotos: /uploads/
+- ✅ Chave de API: localStorage do navegador (criptografia local)
+
+---
+
+## 🔄 Fluxo de Dados
+
+```
+[Dados Pessoais] ┐
+[Anamnese]       ├─→ [Server: /api/gerar-treino] ──→ [Google Gemini API]
+[Análise Postural]┘                                        │
+                                                            ↓
+                                              [Plano de Treino Gerado]
+                                                            │
+                                                            ↓
+                                         [Exibido em TREINO.html]
+```
+
+---
+
+## 📞 Suporte
+
+Se enfrentar problemas:
+1. Verifique as instruções acima
+2. Reinicie o servidor
+3. Limpe o cache do navegador
+4. Tente novamente
+
+Boa sorte com seu treino personalizado! 🏋️‍♂️💪

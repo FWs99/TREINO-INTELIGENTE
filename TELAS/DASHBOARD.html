@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Todos os Dados Coletados</title>
+    <link rel="stylesheet" href="../CSS-TELAS/style-home.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2bf0ff;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 0 0 20px rgba(43, 240, 255, 0.5);
+        }
+
+        .dados-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(43, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #2bf0ff;
+            box-shadow: 0 0 25px rgba(43, 240, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            color: #2bf0ff;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-content {
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(43, 240, 255, 0.1);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: rgba(43, 240, 255, 0.8);
+        }
+
+        .info-value {
+            color: #ffffff;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .image-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(43, 240, 255, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .image-card:hover {
+            border-color: #2bf0ff;
+            box-shadow: 0 0 25px rgba(43, 240, 255, 0.3);
+        }
+
+        .image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-label {
+            padding: 15px;
+            color: #2bf0ff;
+            font-weight: 600;
+            font-size: 0.9em;
+            background: rgba(43, 240, 255, 0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2bf0ff 0%, #00bfff 100%);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(43, 240, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(43, 240, 255, 0.1);
+            color: #2bf0ff;
+            border: 2px solid #2bf0ff;
+        }
+
+        .btn-secondary:hover {
+            background: #2bf0ff;
+            color: #000;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #2bf0ff;
+            font-size: 1.2em;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(43, 240, 255, 0.3);
+            border-top-color: #2bf0ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: rgba(43, 240, 255, 0.1);
+            border: 2px solid #2bf0ff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2bf0ff;
+        }
+
+        .stat-label {
+            color: #e0e0e0;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>📊 Resumo Completo de Dados</h1>
+            <p>Todos os dados coletados no sistema de treinamento</p>
+        </div>
+
+        <div class="stats" id="statsContainer">
+            <!-- Estatísticas serão preenchidas aqui -->
+        </div>
+
+        <div class="dados-container" id="dadosContainer">
+            <div class="loading">
+                <div class="spinner"></div>
+                Carregando dados...
+            </div>
+        </div>
+
+        <div id="posturalSection"></div>
+
+        <div class="button-group">
+            <button class="btn btn-secondary" onclick="location.href='HOME.html'">← Voltar ao início</button>
+            <button class="btn btn-primary" onclick="exportarDados()">📥 Exportar dados</button>
+            <button class="btn btn-secondary" onclick="location.reload()">🔄 Atualizar</button>
+        </div>
+    </div>
+
+    <script>
+        // Carregar todos os dados
+        async function carregarDados() {
+            try {
+                const response = await fetch('/api/all-data');
+                const data = await response.json();
+
+                // Mostrar estatísticas
+                mostrarEstatisticas(data);
+
+                // Mostrar dados pessoais
+                mostrarDadosPessoais(data.pessoal);
+
+                // Mostrar anamnese
+                mostrarAnamnese(data.anamnese);
+
+                // Mostrar análise postural com imagens
+                mostrarPostural(data.postural);
+
+            } catch (error) {
+                console.error('Erro ao carregar dados:', error);
+                document.getElementById('dadosContainer').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <p>Erro ao carregar dados. Tente atualizar a página.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function mostrarEstatisticas(data) {
+            const stats = `
+                <div class="stat-box">
+                    <div class="stat-number">${data.pessoal.length}</div>
+                    <div class="stat-label">Pessoas Cadastradas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${data.anamnese.length}</div>
+                    <div class="stat-label">Anamneses Preenchidas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${data.postural.length}</div>
+                    <div class="stat-label">Análises Posturais</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${data.postural.reduce((acc, p) => acc + (p.imagem_frontal ? 1 : 0), 0)}</div>
+                    <div class="stat-label">Imagens Carregadas</div>
+                </div>
+            `;
+            document.getElementById('statsContainer').innerHTML = stats;
+        }
+
+        function mostrarDadosPessoais(pessoas) {
+            const container = document.getElementById('dadosContainer');
+            
+            if (pessoas.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👤</div>
+                        <p>Nenhum dado pessoal cadastrado ainda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            pessoas.forEach((pessoa, index) => {
+                html += `
+                    <div class="card">
+                        <div class="card-title">👤 ${pessoa.nome}</div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <span class="info-label">Idade:</span>
+                                <span class="info-value">${pessoa.idade} anos</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Gênero:</span>
+                                <span class="info-value">${pessoa.genero}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Altura:</span>
+                                <span class="info-value">${pessoa.altura} cm</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Peso:</span>
+                                <span class="info-value">${pessoa.peso} kg</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Nível:</span>
+                                <span class="info-value">${pessoa.nivel_condicionamento}</span>
+                            </div>
+                            ${pessoa.imc ? `
+                                <div class="info-row">
+                                    <span class="info-label">IMC:</span>
+                                    <span class="info-value">${pessoa.imc.toFixed(2)}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function mostrarAnamnese(anamneses) {
+            if (anamneses.length === 0) return;
+
+            let html = '<h2 style="color: #2bf0ff; margin-top: 40px; margin-bottom: 20px;">📋 Anamnese</h2>';
+            html += '<div class="dados-container">';
+
+            anamneses.forEach(ana => {
+                html += `
+                    <div class="card">
+                        <div class="card-title">📋 Anamnese</div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <span class="info-label">Hábitos:</span>
+                                <span class="info-value">${ana.habitos_alimentares || 'N/A'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Álcool:</span>
+                                <span class="info-value">${ana.consumo_alcool || 'N/A'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Dores:</span>
+                                <span class="info-value">${ana.dores_atuais || 'Nenhuma'}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Sono:</span>
+                                <span class="info-value">${ana.horas_sono || 'N/A'} horas</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Pressão:</span>
+                                <span class="info-value">${ana.pressao_arterial || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            document.getElementById('dadosContainer').innerHTML += html;
+        }
+
+        function mostrarPostural(posturais) {
+            if (posturais.length === 0) return;
+
+            let html = '<h2 style="color: #2bf0ff; margin-top: 40px; margin-bottom: 20px;">🏃 Análise Postural</h2>';
+
+            posturais.forEach((postural, index) => {
+                html += `
+                    <div>
+                        <h3 style="color: #e0e0e0; margin: 20px 0;">Análise #${index + 1}</h3>
+                        <div class="card">
+                            <div class="card-title">📐 Desvios Posturais</div>
+                            <div class="card-content">
+                                <div class="info-row">
+                                    <span class="info-label">Cabeça:</span>
+                                    <span class="info-value">${postural.desvios_cabeca || 'Normal'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Ombros:</span>
+                                    <span class="info-value">${postural.desvios_ombros || 'Normal'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Coluna:</span>
+                                    <span class="info-value">${postural.desvios_coluna || 'Normal'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Pelve:</span>
+                                    <span class="info-value">${postural.desvios_pelve || 'Normal'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">MMII:</span>
+                                    <span class="info-value">${postural.desvios_mmii || 'Normal'}</span>
+                                </div>
+                                ${postural.observacoes_postura ? `
+                                    <div class="info-row" style="flex-direction: column; align-items: flex-start;">
+                                        <span class="info-label">Observações:</span>
+                                        <span class="info-value">${postural.observacoes_postura}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <h4 style="color: #2bf0ff; margin-top: 25px; margin-bottom: 15px;">📸 Imagens da Análise</h4>
+                        <div class="gallery">
+                            ${postural.imagem_frontal ? `
+                                <div class="image-card">
+                                    <div class="image-container">
+                                        <img src="/uploads/${postural.imagem_frontal}" alt="Frontal">
+                                    </div>
+                                    <div class="image-label">👁️ Vista Frontal</div>
+                                </div>
+                            ` : ''}
+                            ${postural.imagem_lateral_direita ? `
+                                <div class="image-card">
+                                    <div class="image-container">
+                                        <img src="/uploads/${postural.imagem_lateral_direita}" alt="Lateral Direita">
+                                    </div>
+                                    <div class="image-label">→ Lateral Direita</div>
+                                </div>
+                            ` : ''}
+                            ${postural.imagem_lateral_esquerda ? `
+                                <div class="image-card">
+                                    <div class="image-container">
+                                        <img src="/uploads/${postural.imagem_lateral_esquerda}" alt="Lateral Esquerda">
+                                    </div>
+                                    <div class="image-label">← Lateral Esquerda</div>
+                                </div>
+                            ` : ''}
+                            ${postural.imagem_costas ? `
+                                <div class="image-card">
+                                    <div class="image-container">
+                                        <img src="/uploads/${postural.imagem_costas}" alt="Costas">
+                                    </div>
+                                    <div class="image-label">🔙 Vista Costas</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('posturalSection').innerHTML = html;
+        }
+
+        function exportarDados() {
+            // Implementar exportação de dados
+            alert('Função de exportação em desenvolvimento!');
+        }
+
+        // Carregar dados ao abrir a página
+        document.addEventListener('DOMContentLoaded', carregarDados);
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+# 🔧 TROUBLESHOOTING - TREINO OTIMIZADO
+
+## ❌ PROBLEMA: "npm não é reconhecido"
+
+### Solução:
+1. Verifique se Node.js foi instalado
+2. Reinicie o computador
+3. Abra Prompt de Comando como **Administrador**
+4. Digite: `where node` e `where npm`
+5. Se não encontrar, reinstale Node.js de https://nodejs.org
+
+---
+
+## ❌ PROBLEMA: "Porta 3000 já está em uso"
+
+### Solução:
+1. Feche outros programas/servidores
+2. No `server.js`, mude a linha:
+   ```javascript
+   const PORT = process.env.PORT || 3000;
+   ```
+   Para:
+   ```javascript
+   const PORT = process.env.PORT || 3001;
+   ```
+3. Reinicie o servidor
+
+---
+
+## ❌ PROBLEMA: "Cannot find module" ou dependências faltando
+
+### Solução:
+1. Delete a pasta `node_modules`
+2. Delete o arquivo `package-lock.json`
+3. Execute `setup.bat` novamente
+
+---
+
+## ❌ PROBLEMA: Banco de dados não criado
+
+### Solução:
+1. Verifique se `database.db` existe na pasta
+2. Se não existir, o servidor criará automaticamente
+3. Para dados de teste: `sqlite3 database.db < exemplo-dados.sql`
+
+---
+
+## ❌ PROBLEMA: Upload de imagens não funciona
+
+### Solução:
+1. Verifique se a pasta `uploads` existe
+2. Se não existir, crie manualmente
+3. Verifique permissões de escrita na pasta
+
+---
+
+## ❌ PROBLEMA: Página não carrega
+
+### Solução:
+1. Verifique se servidor está rodando
+2. Acesse http://localhost:3000 (não file://)
+3. Verifique console do navegador (F12)
+4. Limpe cache do navegador
+
+---
+
+## ❌ PROBLEMA: Dados não salvam
+
+### Solução:
+1. Verifique console do navegador (F12 → Console)
+2. Procure mensagens de erro
+3. Verifique se formulários têm `id` correto
+4. Teste endpoints: POST /submit-dados-pessoais
+
+---
+
+## 🔍 VERIFICAÇÕES GERAIS
+
+### Verificar Node.js:
+```cmd
+node --version
+npm --version
+```
+
+### Verificar arquivos:
+- [ ] package.json existe
+- [ ] server.js existe
+- [ ] database.js existe
+- [ ] node_modules/ existe
+- [ ] uploads/ existe (criada automaticamente)
+
+### Verificar servidor:
+- [ ] Execute `start.bat`
+- [ ] Procure por "🚀 Servidor rodando em http://localhost:3000"
+- [ ] Acesse URL no navegador
+
+---
+
+## 📞 SUPORTE ADICIONAL
+
+Se problemas persistirem:
+1. Reinstale Node.js completamente
+2. Delete `node_modules` e `package-lock.json`
+3. Execute `npm cache clean --force`
+4. Execute `setup.bat` novamente
+5. Verifique logs no terminal
+
+Para mais ajuda, consulte:
+- README.md
+- INSTRUCOES.txt
+- CHECKLIST.txt

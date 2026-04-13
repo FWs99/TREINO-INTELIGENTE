@@ -1,0 +1,572 @@
+/* Zera tudo para começar do zero - margin, padding, a pira toda */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variáveis de cor - basicamente o tema futurista do projeto todo 
+   Usei bastante cyan/verde pra ficar naquele vibe tech mesmo */
+:root {
+    --cyan: #2bf0ff;           /* Cyan bem brilhante, praticamente neon */
+    --green: #7df78e;          /* Verde cana que combo bem com o cyan */
+    --bg-dark: #060b16;        /* Fundo tipo black hole */
+    --surface: rgba(11, 19, 34, 0.92);        /* O fundo da forma - semi transparente */
+    --surface-strong: rgba(8, 13, 25, 0.94);  /* Mais escuro ainda pra dar contraste */
+    --text: #eef6ff;           /* Texto branco que fica bom em fundo escuro */
+    --muted: #8dc9cf;          /* Cyan mais suave pra detalhes */
+    --border: rgba(43, 240, 255, 0.18);       /* Bordas bem suaves em cyan */
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.32); /* Sombra pesada, tipo profundidade */
+}
+
+/* A página toda - fundo com gradiente pra ficar interessante
+   Coloquei um radial no topo pra deixar tipo um brilho cyan sutil */
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(43, 240, 255, 0.08), transparent 15%),
+                linear-gradient(180deg, #06101c 0%, #070a13 45%, #02050a 100%);
+    color: var(--text);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 28px 16px 32px;
+    
+    /* Flexbox pra centralizar tudo de forma limpa */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Título TREINO OTIMIZADO - bem grande e brilhoso */
+.page-title {
+    font-size: 2rem;
+    font-weight: 800;      /* Bem pesado mesmo */
+    color: var(--text);
+    margin-bottom: 26px;
+    letter-spacing: 0.05em; /* Espaçamento pra ficar elegante */
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* O container do formulário - tipo um vidro futurista com efeito blur
+   Coloquei aquele glass morfismo que tá na moda */
+form {
+    width: min(580px, 100%);  /* Responsivo! 580px em desktop, 100% em mobile */
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 34px 28px;
+    
+    /* Sombra dobrada + aquele efeito de vidro congelado */
+    box-shadow: var(--shadow), inset 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+}
+
+/* Labels dos inputs - bem simples e legível */
+label {
+    display: block;           /* Cada label em sua própria linha */
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    font-weight: 600;         /* Semi-bold pra destacar */
+}
+
+/* Fieldset = bloco de campos agrupados - tipo anamnese, dados pessoais etc */
+.section-group {
+    border: 1px solid rgba(43, 240, 255, 0.14);
+    border-radius: 24px;
+    padding: 22px 22px 16px;
+    margin-bottom: 24px;
+    background: rgba(10, 18, 34, 0.92);  /* Um pouco mais escuro que o form pai */
+}
+
+/* A última seção fica mais perto do botão - fica mais compactado */
+.section-group:last-of-type {
+    margin-bottom: 18px;
+}
+
+/* O título de cada seção em cyan bright */
+.section-group legend {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cyan);    /* Aquele cyan neon */
+    padding: 0 10px;
+    margin-left: 12px;
+}
+
+/* Os inputs text, number, select e textarea - tudo junto porque têm estilo parecido */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 20px;  /* Espaço bom entre os campos */
+    border: 1px solid rgba(43, 240, 255, 0.16);
+    border-radius: 18px;
+    background: rgba(1, 7, 16, 0.9);  /* Preto com um toque de azul */
+    color: var(--text);
+    font-size: 1rem;
+    outline: none;
+    
+    /* Transição suave - quando muda de foco fica bonito */
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* Input de arquivo - borda tracejada porque é diferente dos outros */
+input[type="file"] {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border: 2px dashed rgba(43, 240, 255, 0.28);  /* Pontilhado - tipo drag and drop */
+    border-radius: 18px;
+    background: rgba(1, 7, 16, 0.7);
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+/* Quando foca no input file fica mais brilhoso */
+input[type="file"]:focus {
+    border-color: var(--cyan);
+    background: rgba(1, 7, 16, 0.85);
+    box-shadow: 0 0 30px rgba(43, 240, 255, 0.12);
+}
+
+/* Quando você clica no input ou textarea - fica todo brilhoso em cyan
+   Levanta um pouquinho pra dar aquele efeito 3D */
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--cyan);  /* Borda fica type glow cyan */
+    box-shadow: 0 0 30px rgba(43, 240, 255, 0.18);  /* Aquele brilho */
+    transform: translateY(-1px);  /* Sobe um pixel - parece que levanta */
+}
+
+/* Select customizado - remover aquele visual feio padrão é essencial
+   Coloquei setas custom com gradientes */
+select {
+    appearance: none;
+    /* Cria as setas em cima com triangulozinhos de gradiente */
+    background-image: linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.65) 50%),
+                      linear-gradient(135deg, rgba(255, 255, 255, 0.65) 50%, transparent 50%);
+    background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+/* Textarea - campo grande pra texto longo */
+textarea {
+    min-height: 110px;    /* Pelo menos isso de altura */
+    resize: vertical;     /* Só deixa redimensionar pra baixo, não pra os lados */
+}
+
+/* Última textarea da página fica com mais espaço pra não colar no botão */
+textarea:last-of-type {
+    margin-bottom: 26px;
+}
+
+/* Botão de envio - o "star" da página
+   Gradiente cyan pra verde que é a identidade visual */
+input[type="submit"] {
+    width: 100%;
+    padding: 16px 0;
+    margin-top: 6px;
+    
+    /* Gradiente 45 graus - cyan até verde, fica muito legal */
+    background: linear-gradient(135deg, var(--cyan), var(--green));
+    border: none;
+    border-radius: 20px;
+    color: #061116;        /* Texto super escuro pra contrastar */
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    
+    /* Efeito suave quando passar o mouse */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 18px 40px rgba(43, 240, 255, 0.22);
+}
+
+/* Hover do botão submit - levanta e aumenta a sombra */
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 50px rgba(43, 240, 255, 0.28);
+}
+
+/* Agrupa os botões de navegação (tipo Próxima, Voltar etc) */
+.button-row {
+    display: flex;
+    justify-content: center;  /* Centraliza */
+    margin-top: 18px;
+}
+
+/* Botões que parecem botões mas na real são links - tipo Próxima, Voltar */
+.button-link {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 24px;
+    border-radius: 20px;
+    background: rgba(43, 240, 255, 0.16);  /* Cyan bem sutil */
+    border: 1px solid rgba(43, 240, 255, 0.28);
+    color: var(--text);
+    text-decoration: none;  /* Remove aquele underline chato de link */
+    font-weight: 700;
+    
+    /* Transição bonita no hover */
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover - fica mais opaco e levanta um pouco */
+.button-link:hover {
+    background: rgba(43, 240, 255, 0.24);
+    transform: translateY(-2px);
+}
+
+/* Variante secundária - pra botão de Voltar fica mais discreto */
+.button-link.secondary {
+    background: rgba(0, 10, 18, 0.8);      /* Bem escuro, quase invisível */
+    border-color: rgba(125, 247, 142, 0.22); /* Borda verde suave */
+}
+
+/* Media query - quando a tela é pequena (celular)
+   Reduz padding pra aproveitar o espaço */
+@media (max-width: 600px) {
+    body {
+        padding: 18px 12px 24px;  /* Menos espaço nas laterais */
+    }
+    
+    form {
+        padding: 26px 20px;       /* Mais compactado */
+    }
+    
+    label {
+        font-size: 0.92rem;       /* Letra um pouco menor */
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        padding: 12px 14px;       /* Espaço menor dentro dos inputs */
+    }
+    
+    input[type="submit"] {
+        padding: 14px 0;
+    }
+}
+
+/* Seção de dados - não tá sendo usado agora mas deixei aí pra referência */
+.data-form-section h2 {
+    color: var(--cyan);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Se tiver a classe hidden, simplesmente some */
+.data-form-section.hidden {
+    display: none;
+}
+
+/* Grupo de formulário básico */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Container pra checkboxes - deixa eles em coluna, um embaixo do outro */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;  /* Coluna = um embaixo do outro */
+    gap: 14px;              /* Espaço entre eles */
+    padding: 14px 0;
+    margin-bottom: 18px;
+}
+
+/* Label com checkbox - eles ficam lado a lado */
+.checkbox-group label {
+    display: flex;           /* Coloca checkbox e texto lado a lado */
+    align-items: center;     /* Alinha no meio verticalmente */
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* O checkbox mesmo - estilo customizado porque o padrão é feio */
+input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;     /* Espaço entre o checkbox e o texto */
+    cursor: pointer;
+    accent-color: var(--green);  /* Cor do check é verde */
+    border: 2px solid rgba(43, 240, 255, 0.2);  /* Borda cyan suave */
+    border-radius: 8px;     /* Cantos levemente arredondados */
+}
+
+/* Quando passa mouse no checkbox */
+input[type="checkbox"]:hover {
+    border-color: var(--cyan);  /* Borda mais brilhosa */
+}
+
+/* Quando está marcado */
+input[type="checkbox"]:checked {
+    border-color: var(--green);  /* Borda fica verde */
+    background-color: var(--green);  /* Fundo verde também */
+}
+
+.form-group label {
+    display: block;
+    color: var(--green);
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.95em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--cyan);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--text-light);
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 15px var(--shadow-green);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Botão de submit do formulário */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, var(--cyan), var(--green));
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 20px var(--shadow-cyan);
+}
+
+.btn-submit:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--shadow-green);
+}
+
+/* ============ BARRA DE NAVEGAÇÃO INFERIOR ============ */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgba(3, 8, 16, 0.96);
+    border-top: 1px solid rgba(43, 240, 255, 0.18);
+    box-shadow: 0 -12px 35px rgba(0, 0, 0, 0.45);
+    padding: 10px 0 12px 0;
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: #666666;
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+    font-size: 0.8em;
+}
+
+.nav-item i {
+    font-size: 1.5em;
+}
+
+/* ===== USER HEADER ===== */
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: rgba(10, 18, 34, 0.7);
+    border: 1px solid rgba(43, 240, 255, 0.18);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    color: var(--cyan);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* ===== BOTÃO LOGOUT ===== */
+.btn-logout {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, rgba(43, 240, 255, 0.9), rgba(125, 247, 142, 0.9));
+    border: none;
+    border-radius: 12px;
+    color: #061116;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px rgba(43, 240, 255, 0.2);
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(43, 240, 255, 0.3);
+}
+
+.btn-logout:active {
+    transform: translateY(0);
+}
+
+/* ===== NOTIFICAÇÃO ===== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 12px;
+    border-left: 4px solid;
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    animation: slideInRight 0.3s ease-out;
+    max-width: 90%;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(400px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.notification.fade-out {
+    animation: slideOutRight 0.3s ease-out forwards;
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(400px);
+    }
+}
+
+.notification-success {
+    background: rgba(125, 247, 142, 0.15);
+    color: #7df78e;
+    border-left-color: #7df78e;
+}
+
+.notification-error {
+    background: rgba(255, 107, 107, 0.15);
+    color: #ff6b6b;
+    border-left-color: #ff6b6b;
+}
+
+.notification-info {
+    background: rgba(43, 240, 255, 0.15);
+    color: #2bf0ff;
+    border-left-color: #2bf0ff;
+}
+
+@media (max-width: 640px) {
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .user-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .btn-logout {
+        width: 100%;
+    }
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--shadow-cyan);
+}
+
+/* ============ RESPONSIVIDADE ============ */
+@media (max-width: 768px) {
+    .container {
+        padding: 18px 12px 0;
+    }
+
+    .welcome-title {
+        font-size: 1.6em;
+    }
+
+    .progress-section {
+        padding: 20px 16px;
+    }
+
+    .features-section {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-title {
+        font-size: 1.3em;
+    }
+
+    .progress-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .progress-text {
+        font-size: 1.6em;
+    }
+
+    .features-section {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header h2 {
+        font-size: 1.1em;
+    }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anamnese</title>
+    <link rel="stylesheet" href="../CSS-TELAS/style-home.css">
+    <script src="../SCRIPTS/auth.js"></script>
+    <script src="../SCRIPTS/navegacao.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            redirecionarSeNaoAutenticado();
+        });
+    </script>
+</head>
+<body>
+    <h1 class="page-title">Anamnese</h1>
+
+    <form id="anamneseForm" action="/submit-anamnese" method="post">
+        <fieldset class="section-group">
+            <legend>Anamnese de Saúde</legend>
+
+            <label for="habitos">Hábitos alimentares:</label>
+            <select id="habitos" name="habitos">
+                <option value="Normal">Normal</option>
+                <option value="irregular">Irregular</option>
+                <option value="frequente_fast_food">Frequentemente fast food</option>
+                <option value="vegetariana">Vegetariana / vegana</option>
+            </select>
+
+            <label for="alcool">Consome bebida alcoólica?</label>
+            <select id="alcool" name="alcool">
+                <option value="nao">Não</option>
+                <option value="social">Socialmente</option>
+                <option value="regular">Regularmente</option>
+            </select>
+
+            <label>Presença de dores:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="dores" value="dorsal"> Dorsal</label>
+                <label><input type="checkbox" name="dores" value="lombar"> Lombar</label>
+                <label><input type="checkbox" name="dores" value="cervical"> Cervical</label>
+            </div>
+
+            <label for="pressao">Pressão arterial:</label>
+            <select id="pressao" name="pressao">
+                <option value="normal">Normal</option>
+                <option value="alta">Alta</option>
+                <option value="baixa">Baixa</option>
+            </select>
+
+            <label for="repouso">Descanso / repouso diário:</label>
+            <input type="text" id="repouso" name="repouso" placeholder="Ex: 1h de pausa, descanso à noite">
+
+            <label for="sono">Horas de sono por noite:</label>
+            <input type="number" id="sono" name="sono" min="0" max="24" placeholder="Ex: 7">
+
+            <label for="sonoregular">Sono regular?</label>
+            <select id="sonoregular" name="sonoregular">
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <label for="saude">Observações sobre saúde atual:</label>
+            <textarea id="saude" name="saude" rows="4" cols="50" placeholder="Informe condições médicas, dores ou restrições."></textarea>
+        </fieldset>
+
+        <fieldset class="section-group">
+            <legend>Condições de saúde</legend>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="condicao" value="anemia"> Anemia</label>
+                <label><input type="checkbox" name="condicao" value="crise_respiratoria"> Crise respiratória</label>
+                <label><input type="checkbox" name="condicao" value="colesterol"> Colesterol</label>
+                <label><input type="checkbox" name="condicao" value="depressao_ansiedade"> Depressão / Ansiedade</label>
+                <label><input type="checkbox" name="condicao" value="gastrite"> Gastrite</label>
+                <label><input type="checkbox" name="condicao" value="insonia"> Insônia</label>
+                <label><input type="checkbox" name="condicao" value="tensao_ombro_pescoco"> Tensão ombro/pescoço</label>
+                <label><input type="checkbox" name="condicao" value="tireoide"> Tireoide</label>
+                <label><input type="checkbox" name="condicao" value="tonturas"> Tonturas</label>
+                <label><input type="checkbox" name="condicao" value="varizes"> Varizes</label>
+            </div>
+
+            <label for="outras_doencas">Outras doenças ou observações:</label>
+            <textarea id="outras_doencas" name="outras_doencas" rows="4" cols="50" placeholder="Descreva outras doenças ou condições importantes."></textarea>
+        </fieldset>
+
+        <fieldset class="section-group">
+            <legend>Objetivos e restrições</legend>
+
+            <label>Objetivos de treino:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="objetivos" value="perda_peso"> Perda de peso</label>
+                <label><input type="checkbox" name="objetivos" value="hipertrofia"> Hipertrofia</label>
+                <label><input type="checkbox" name="objetivos" value="saude_qualidade_vida"> Saúde e qualidade de vida</label>
+                <label><input type="checkbox" name="objetivos" value="preparacao_atletismo_prova"> Preparação para atletismo/prova</label>
+            </div>
+
+            <label for="condicoes">Restrição ou lesão:</label>
+            <textarea id="condicoes" name="condicoes" rows="4" cols="50" placeholder="Mencione qualquer condição médica ou limitação."></textarea>
+        </fieldset>
+
+        <input type="submit" value="Enviar Anamnese">
+        <div class="button-row">
+            <a class="button-link secondary" href="/HOME.html">Voltar para Dados Pessoais</a>
+            <a class="button-link" href="/POSTURA.html">Ir para Análise Postural</a>
+            <a class="button-link primary" href="/TREINO.html">Pular Postural e Gerar Treino</a>
+        </div>
+    </form>
+
+    <script>
+        // Função helper para coletar valores de checkboxes
+        function getCheckedValues(name) {
+            const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        document.getElementById('anamneseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Coletar dados do formulário
+            const formData = {
+                habitos: document.getElementById('habitos').value,
+                alcool: document.getElementById('alcool').value,
+                dores: getCheckedValues('dores'),
+                pressao: document.getElementById('pressao').value,
+                repouso: document.getElementById('repouso').value,
+                sono: document.getElementById('sono').value,
+                sonoregular: document.getElementById('sonoregular').value,
+                saude: document.getElementById('saude').value,
+                condicao: getCheckedValues('condicao'),
+                outras_doencas: document.getElementById('outras_doencas').value,
+                objetivos: getCheckedValues('objetivos'),
+                condicoes: document.getElementById('condicoes').value,
+                idPessoa: localStorage.getItem('idPessoa') // Recuperar ID da pessoa
+            };
+
+            try {
+                console.log('Enviando anamnese:', formData);
+                
+                const response = await fetch('/submit-anamnese', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                console.log('Resposta do servidor (anamnese):', result);
+
+                if (result.success) {
+                    // Salvar progresso usando sistema de navegação
+                    navegacao.salvarProgresso('anamnese', {});
+                    console.log('Anamnese salva com sucesso!');
+                    
+                    // Redirecionar diretamente para POSTURA
+                    window.location.href = '/POSTURA.html';
+                } else {
+                    console.error('Erro do servidor (anamnese):', result.error);
+                    alert('Erro ao salvar anamnese: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Erro na requisição (anamnese):', error);
+                alert('Erro ao enviar dados. Tente novamente.');
+            }
+        });
+    </script>
+</body>
+</html>
