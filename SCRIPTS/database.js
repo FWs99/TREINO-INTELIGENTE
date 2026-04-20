@@ -26,9 +26,17 @@ function initDatabase() {
             altura REAL NOT NULL,
             peso REAL NOT NULL,
             nivel_condicionamento TEXT NOT NULL,
+            treino_gerado INTEGER DEFAULT 0,
             data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     `);
+
+    // Adicionar campo treino_gerado se não existir (para tabelas existentes)
+    db.run(`ALTER TABLE dados_pessoais ADD COLUMN treino_gerado INTEGER DEFAULT 0`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) {
+            console.error('Erro ao adicionar campo treino_gerado:', err);
+        }
+    });
 
     // Tabela para anamnese
     db.run(`
@@ -47,10 +55,18 @@ function initDatabase() {
             outras_doencas TEXT,
             objetivos TEXT,
             restricoes_lesoes TEXT,
+            dias_treino INTEGER DEFAULT 3,
             data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (id_pessoa) REFERENCES dados_pessoais (id)
         )
     `);
+
+    // Adicionar campo dias_treino se não existir (para tabelas existentes)
+    db.run(`ALTER TABLE anamnese ADD COLUMN dias_treino INTEGER DEFAULT 3`, (err) => {
+        if (err && !err.message.includes('duplicate column name')) {
+            console.error('Erro ao adicionar campo dias_treino:', err);
+        }
+    });
 
     // Tabela para análise postural
     db.run(`

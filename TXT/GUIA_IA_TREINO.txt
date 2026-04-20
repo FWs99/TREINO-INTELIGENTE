@@ -9,7 +9,7 @@ dados científicos atuais.
 
 ## 🚀 Como Funciona o Fluxo Completo
 
-### 1️⃣ DADOS PESSOAIS (HOME.html)
+### 1️⃣ DADOS PESSOAIS (DADOS_PESSOAIS.html)
    └─ Preencha: Nome, Idade, Gênero, Altura, Peso, Nível de Condicionamento
 
 ### 2️⃣ ANAMNESE (ANAMNESE.html)

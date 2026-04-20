@@ -5,26 +5,24 @@
     box-sizing: border-box;
 }
 
-/* Variáveis de cor - basicamente o tema futurista do projeto todo 
-   Usei bastante cyan/verde pra ficar naquele vibe tech mesmo */
+/* Variáveis de cor - tema cinza chumbo e preto em degrade */
 :root {
-    --cyan: #2bf0ff;           /* Cyan bem brilhante, praticamente neon */
-    --green: #7df78e;          /* Verde cana que combo bem com o cyan */
-    --bg-dark: #060b16;        /* Fundo tipo black hole */
-    --surface: rgba(11, 19, 34, 0.92);        /* O fundo da forma - semi transparente */
-    --surface-strong: rgba(8, 13, 25, 0.94);  /* Mais escuro ainda pra dar contraste */
-    --text: #eef6ff;           /* Texto branco que fica bom em fundo escuro */
-    --muted: #8dc9cf;          /* Cyan mais suave pra detalhes */
-    --border: rgba(43, 240, 255, 0.18);       /* Bordas bem suaves em cyan */
-    --shadow: 0 24px 60px rgba(0, 0, 0, 0.32); /* Sombra pesada, tipo profundidade */
+    --cyan: #6b7280;           /* Cinza chumbo médio */
+    --green: #4b5563;          /* Cinza chumbo escuro */
+    --bg-dark: #0a0a0a;        /* Preto profundo */
+    --surface: rgba(30, 30, 30, 0.92);        /* Fundo cinza escuro semi transparente */
+    --surface-strong: rgba(20, 20, 20, 0.94);  /* Mais escuro ainda pra dar contraste */
+    --text: #e5e5e5;           /* Texto cinza claro */
+    --muted: #9ca3af;          /* Cinza suave pra detalhes */
+    --border: rgba(107, 114, 128, 0.18);       /* Bordas cinza chumbo suaves */
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.5); /* Sombra pesada, tipo profundidade */
 }
 
-/* A página toda - fundo com gradiente pra ficar interessante
-   Coloquei um radial no topo pra deixar tipo um brilho cyan sutil */
+/* A página toda - fundo com gradiente cinza chumbo e preto */
 body {
     min-height: 100vh;
-    background: radial-gradient(circle at top, rgba(43, 240, 255, 0.08), transparent 15%),
-                linear-gradient(180deg, #06101c 0%, #070a13 45%, #02050a 100%);
+    background: radial-gradient(circle at top, rgba(107, 114, 128, 0.15), transparent 20%),
+                linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 45%, #000000 100%);
     color: var(--text);
     font-family: 'Segoe UI', Arial, sans-serif;
     padding: 28px 16px 32px;
@@ -72,11 +70,11 @@ label {
 
 /* Fieldset = bloco de campos agrupados - tipo anamnese, dados pessoais etc */
 .section-group {
-    border: 1px solid rgba(43, 240, 255, 0.14);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: 22px 22px 16px;
     margin-bottom: 24px;
-    background: rgba(10, 18, 34, 0.92);  /* Um pouco mais escuro que o form pai */
+    background: rgba(25, 25, 25, 0.92);  /* Um pouco mais escuro que o form pai */
 }
 
 /* A última seção fica mais perto do botão - fica mais compactado */
@@ -101,9 +99,9 @@ textarea {
     width: 100%;
     padding: 14px 16px;
     margin-bottom: 20px;  /* Espaço bom entre os campos */
-    border: 1px solid rgba(43, 240, 255, 0.16);
+    border: 1px solid var(--border);
     border-radius: 18px;
-    background: rgba(1, 7, 16, 0.9);  /* Preto com um toque de azul */
+    background: rgba(15, 15, 15, 0.9);  /* Preto cinza */
     color: var(--text);
     font-size: 1rem;
     outline: none;
@@ -117,9 +115,9 @@ input[type="file"] {
     width: 100%;
     padding: 14px 16px;
     margin-bottom: 20px;
-    border: 2px dashed rgba(43, 240, 255, 0.28);  /* Pontilhado - tipo drag and drop */
+    border: 2px dashed var(--border);  /* Pontilhado - tipo drag and drop */
     border-radius: 18px;
-    background: rgba(1, 7, 16, 0.7);
+    background: rgba(15, 15, 15, 0.7);
     color: var(--text);
     font-size: 0.95rem;
     outline: none;
@@ -130,7 +128,7 @@ input[type="file"] {
 input[type="file"]:focus {
     border-color: var(--cyan);
     background: rgba(1, 7, 16, 0.85);
-    box-shadow: 0 0 30px rgba(43, 240, 255, 0.12);
+    box-shadow: 0 0 30px rgba(107, 114, 128, 0.12);
 }
 
 /* Quando você clica no input ou textarea - fica todo brilhoso em cyan
@@ -140,7 +138,7 @@ input[type="number"]:focus,
 select:focus,
 textarea:focus {
     border-color: var(--cyan);  /* Borda fica type glow cyan */
-    box-shadow: 0 0 30px rgba(43, 240, 255, 0.18);  /* Aquele brilho */
+    box-shadow: 0 0 30px rgba(107, 114, 128, 0.18);  /* Aquele brilho */
     transform: translateY(-1px);  /* Sobe um pixel - parece que levanta */
 }
 
@@ -178,20 +176,20 @@ input[type="submit"] {
     background: linear-gradient(135deg, var(--cyan), var(--green));
     border: none;
     border-radius: 20px;
-    color: #061116;        /* Texto super escuro pra contrastar */
+    color: #ffffff;        /* Texto branco pra contrastar */
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     
     /* Efeito suave quando passar o mouse */
     transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 18px 40px rgba(43, 240, 255, 0.22);
+    box-shadow: 0 18px 40px rgba(107, 114, 128, 0.22);
 }
 
 /* Hover do botão submit - levanta e aumenta a sombra */
 input[type="submit"]:hover {
     transform: translateY(-2px);
-    box-shadow: 0 24px 50px rgba(43, 240, 255, 0.28);
+    box-shadow: 0 24px 50px rgba(107, 114, 128, 0.28);
 }
 
 /* Agrupa os botões de navegação (tipo Próxima, Voltar etc) */
@@ -199,6 +197,7 @@ input[type="submit"]:hover {
     display: flex;
     justify-content: center;  /* Centraliza */
     margin-top: 18px;
+    
 }
 
 /* Botões que parecem botões mas na real são links - tipo Próxima, Voltar */
@@ -208,8 +207,8 @@ input[type="submit"]:hover {
     align-items: center;
     padding: 14px 24px;
     border-radius: 20px;
-    background: rgba(43, 240, 255, 0.16);  /* Cyan bem sutil */
-    border: 1px solid rgba(43, 240, 255, 0.28);
+    background: rgba(107, 114, 128, 0.16);  /* Cinza chumbo sutil */
+    border: 1px solid var(--border);
     color: var(--text);
     text-decoration: none;  /* Remove aquele underline chato de link */
     font-weight: 700;
@@ -220,14 +219,14 @@ input[type="submit"]:hover {
 
 /* Hover - fica mais opaco e levanta um pouco */
 .button-link:hover {
-    background: rgba(43, 240, 255, 0.24);
+    background: rgba(107, 114, 128, 0.24);
     transform: translateY(-2px);
 }
 
 /* Variante secundária - pra botão de Voltar fica mais discreto */
 .button-link.secondary {
     background: rgba(0, 10, 18, 0.8);      /* Bem escuro, quase invisível */
-    border-color: rgba(125, 247, 142, 0.22); /* Borda verde suave */
+    border-color: var(--border); /* Borda cinza suave */
 }
 
 /* Media query - quando a tela é pequena (celular)
@@ -298,7 +297,7 @@ input[type="checkbox"] {
     margin-right: 12px;     /* Espaço entre o checkbox e o texto */
     cursor: pointer;
     accent-color: var(--green);  /* Cor do check é verde */
-    border: 2px solid rgba(43, 240, 255, 0.2);  /* Borda cyan suave */
+    border: 2px solid var(--border);  /* Borda cyan suave */
     border-radius: 8px;     /* Cantos levemente arredondados */
 }
 
@@ -309,8 +308,8 @@ input[type="checkbox"]:hover {
 
 /* Quando está marcado */
 input[type="checkbox"]:checked {
-    border-color: var(--green);  /* Borda fica verde */
-    background-color: var(--green);  /* Fundo verde também */
+    border-color: var(--green);  /* Borda fica cinza escuro */
+    background-color: var(--green);  /* Fundo cinza escuro também */
 }
 
 .form-group label {
@@ -326,9 +325,9 @@ input[type="checkbox"]:checked {
 .form-group textarea {
     width: 100%;
     padding: 10px;
-    border: 2px solid var(--cyan);
+    border: 2px solid var(--border);
     border-radius: 8px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(20, 20, 20, 0.5);
     color: var(--text-light);
     font-size: 1em;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -338,7 +337,7 @@ input[type="checkbox"]:checked {
 .form-group select:focus,
 .form-group textarea:focus {
     border-color: var(--green);
-    box-shadow: 0 0 15px var(--shadow-green);
+    box-shadow: 0 0 15px rgba(107, 114, 128, 0.3);
     outline: none;
 }
 
@@ -359,12 +358,12 @@ input[type="checkbox"]:checked {
     font-weight: bold;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 0 20px var(--shadow-cyan);
+    box-shadow: 0 0 20px rgba(107, 114, 128, 0.3);
 }
 
 .btn-submit:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 30px var(--shadow-green);
+    box-shadow: 0 0 30px rgba(75, 85, 99, 0.4);
 }
 
 /* ============ BARRA DE NAVEGAÇÃO INFERIOR ============ */
@@ -377,7 +376,7 @@ input[type="checkbox"]:checked {
     justify-content: space-around;
     align-items: center;
     background: rgba(3, 8, 16, 0.96);
-    border-top: 1px solid rgba(43, 240, 255, 0.18);
+    border-top: 1px solid var(--border);
     box-shadow: 0 -12px 35px rgba(0, 0, 0, 0.45);
     padding: 10px 0 12px 0;
     z-index: 1000;
@@ -406,7 +405,7 @@ input[type="checkbox"]:checked {
     margin-bottom: 20px;
     padding: 16px 20px;
     background: rgba(10, 18, 34, 0.7);
-    border: 1px solid rgba(43, 240, 255, 0.18);
+    border: 1px solid var(--border);
     border-radius: 16px;
     backdrop-filter: blur(10px);
 }
@@ -427,20 +426,20 @@ input[type="checkbox"]:checked {
 /* ===== BOTÃO LOGOUT ===== */
 .btn-logout {
     padding: 10px 20px;
-    background: linear-gradient(135deg, rgba(43, 240, 255, 0.9), rgba(125, 247, 142, 0.9));
+    background: linear-gradient(135deg, var(--cyan), var(--green));
     border: none;
     border-radius: 12px;
-    color: #061116;
+    color: #ffffff;
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 8px 24px rgba(43, 240, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(107, 114, 128, 0.2);
 }
 
 .btn-logout:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(43, 240, 255, 0.3);
+    box-shadow: 0 12px 32px rgba(107, 114, 128, 0.3);
 }
 
 .btn-logout:active {
@@ -488,9 +487,9 @@ input[type="checkbox"]:checked {
 }
 
 .notification-success {
-    background: rgba(125, 247, 142, 0.15);
-    color: #7df78e;
-    border-left-color: #7df78e;
+    background: rgba(107, 114, 128, 0.15);
+    color: var(--cyan);
+    border-left-color: var(--cyan);
 }
 
 .notification-error {
@@ -500,9 +499,9 @@ input[type="checkbox"]:checked {
 }
 
 .notification-info {
-    background: rgba(43, 240, 255, 0.15);
-    color: #2bf0ff;
-    border-left-color: #2bf0ff;
+    background: rgba(107, 114, 128, 0.15);
+    color: var(--cyan);
+    border-left-color: var(--cyan);
 }
 
 @media (max-width: 640px) {
@@ -526,7 +525,7 @@ input[type="checkbox"]:checked {
 .nav-item:hover,
 .nav-item.active {
     color: var(--cyan);
-    text-shadow: 0 0 10px var(--shadow-cyan);
+    text-shadow: 0 0 10px rgba(107, 114, 128, 0.5);
 }
 
 /* ============ RESPONSIVIDADE ============ */

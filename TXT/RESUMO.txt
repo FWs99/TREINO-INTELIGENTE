@@ -10,7 +10,7 @@
 📂 **ARQUIVOS PRINCIPAIS:**
 - server.js (servidor)
 - database.js (banco)
-- HOME.html / ANAMNESE.html / POSTURA.html (formulários)
+- DADOS_PESSOAIS.html / ANAMNESE.html / POSTURA.html (formulários)
 - admin.html (administração)
 
 🚀 **PARA INICIAR:**

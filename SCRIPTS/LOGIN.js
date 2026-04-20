@@ -1,15 +1,3 @@
-// ===== TOGGLE PASSWORD VISIBILITY =====
-const togglePasswordBtn = document.getElementById('togglePassword');
-const senhaInput = document.getElementById('senha');
-
-togglePasswordBtn.addEventListener('click', function() {
-    const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
-    senhaInput.setAttribute('type', type);
-    
-    // Muda o ícone
-    this.textContent = type === 'password' ? '👁️' : '🙈';
-});
-
 // ===== FORM SUBMISSION =====
 const loginForm = document.getElementById('loginForm');
 
@@ -49,9 +37,9 @@ loginForm.addEventListener('submit', function(e) {
     setTimeout(() => {
         mostrarNotificacao('Login realizado com sucesso! 🎉', 'success');
         
-        // Redirecionar para HOME.html após 1 segundo
+        // Redirecionar para DADOS_PESSOAIS.html após 1 segundo
         setTimeout(() => {
-            window.location.href = '/HOME.html';
+            window.location.href = '/DADOS_PESSOAIS.html';
         }, 800);
     }, 1500);
 });

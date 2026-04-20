@@ -59,7 +59,7 @@ function etapaAnterior() {
     
     switch(atual) {
         case 'anamnese':
-            window.location.href = '/HOME.html';
+            window.location.href = '/DADOS_PESSOAIS.html';
             break;
         case 'postura':
             window.location.href = '/ANAMNESE.html';
@@ -68,7 +68,7 @@ function etapaAnterior() {
             window.location.href = '/POSTURA.html';
             break;
         default:
-            window.location.href = '/HOME.html';
+            window.location.href = '/DADOS_PESSOAIS.html';
     }
 }
 
@@ -77,7 +77,7 @@ function resetarProgresso() {
     localStorage.removeItem('idPessoa');
     localStorage.removeItem('anamneseCompleta');
     localStorage.removeItem('posturalCompleta');
-    window.location.href = '/HOME.html';
+    window.location.href = '/DADOS_PESSOAIS.html';
 }
 
 // Adicionar indicador de progresso
@@ -86,7 +86,7 @@ function criarIndicadorProgresso() {
     container.className = 'progress-indicator';
     
     const etapas = [
-        { nome: 'Dados Pessoais', id: 'dados', url: 'HOME.html' },
+        { nome: 'Dados Pessoais', id: 'dados', url: 'DADOS_PESSOAIS.html' },
         { nome: 'Anamnese', id: 'anamnese', url: 'ANAMNESE.html' },
         { nome: 'Postura', id: 'postura', url: 'POSTURA.html' },
         { nome: 'Treino', id: 'treino', url: 'TREINO.html' }
@@ -120,8 +120,8 @@ function criarIndicadorProgresso() {
         style.id = 'progress-styles';
         style.textContent = `
             .progress-indicator {
-                background: rgba(43, 240, 255, 0.1);
-                border: 1px solid rgba(43, 240, 255, 0.3);
+                background: rgba(107, 114, 128, 0.1);
+                border: 1px solid rgba(107, 114, 128, 0.3);
                 border-radius: 12px;
                 padding: 20px;
                 margin-bottom: 30px;
@@ -151,7 +151,7 @@ function criarIndicadorProgresso() {
                 right: -50%;
                 width: 100%;
                 height: 2px;
-                background: rgba(43, 240, 255, 0.2);
+                background: rgba(107, 114, 128, 0.2);
                 z-index: 1;
             }
             
@@ -163,8 +163,8 @@ function criarIndicadorProgresso() {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                background: rgba(43, 240, 255, 0.2);
-                border: 2px solid rgba(43, 240, 255, 0.4);
+                background: rgba(107, 114, 128, 0.2);
+                border: 2px solid rgba(107, 114, 128, 0.4);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -185,7 +185,7 @@ function criarIndicadorProgresso() {
                 background: var(--green);
                 border-color: var(--green);
                 color: #000;
-                box-shadow: 0 0 20px rgba(125, 247, 142, 0.5);
+                box-shadow: 0 0 20px rgba(75, 85, 99, 0.5);
             }
             
             .step-label {

@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'TELAS', 'LOGIN.html'));
 });
 app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'TELAS', 'HOME.html'));
+    res.sendFile(path.join(__dirname, 'TELAS', 'DADOS_PESSOAIS.html'));
 });
 app.get('/anamnese', (req, res) => {
     res.sendFile(path.join(__dirname, 'TELAS', 'ANAMNESE.html'));
@@ -47,8 +47,8 @@ app.get('/admin', (req, res) => {
 app.get('/LOGIN.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'TELAS', 'LOGIN.html'));
 });
-app.get('/HOME.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'TELAS', 'HOME.html'));
+app.get('/DADOS_PESSOAIS.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'TELAS', 'DADOS_PESSOAIS.html'));
 });
 app.get('/ANAMNESE.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'TELAS', 'ANAMNESE.html'));
@@ -127,7 +127,7 @@ app.post('/submit-dados-pessoais', (req, res) => {
 app.post('/submit-anamnese', (req, res) => {
     const {
         habitos, alcool, dores, pressao, repouso, sono, sonoregular,
-        saude, condicao, outras_doencas, objetivos, condicoes
+        saude, dias_treino, condicao, outras_doencas, objetivos, condicoes
     } = req.body;
 
     // Converter arrays para string (checkboxes múltiplos)
@@ -139,13 +139,13 @@ app.post('/submit-anamnese', (req, res) => {
         INSERT INTO anamnese (
             habitos_alimentares, consumo_alcool, dores, pressao_arterial,
             descanso_repouso, horas_sono, sono_regular, observacoes_saude,
-            condicoes_saude, outras_doencas, objetivos, restricoes_lesoes
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            dias_treino, condicoes_saude, outras_doencas, objetivos, restricoes_lesoes
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.run(sql, [
-        habitos, alcool, doresStr, pressao, repouso, sono, sonoregular,
-        saude, condicaoStr, outras_doencas, objetivosStr, condicoes
+        habitos, alcool, doresStr, pressao, repouso, sono, sonoregular, saude, dias_treino || 3,
+        condicaoStr, outras_doencas, objetivosStr, condicoes
     ], function(err) {
         if (err) {
             console.error('Erro ao salvar anamnese:', err);
@@ -168,8 +168,7 @@ app.post('/submit-postural', upload.fields([
     { name: 'imagem_costas', maxCount: 1 }
 ]), (req, res) => {
     const {
-        desvio_cabeca, desvio_ombro, desvio_coluna, desvio_pelvis,
-        desvio_mmii, observacoes_postura, recomendacoes
+        observacoes_postura
     } = req.body;
 
     // Caminhos das imagens salvas
@@ -180,24 +179,24 @@ app.post('/submit-postural', upload.fields([
         costas: req.files.imagem_costas ? req.files.imagem_costas[0].filename : null
     };
 
-    // Converter arrays para string
-    const cabecaStr = Array.isArray(desvio_cabeca) ? desvio_cabeca.join(', ') : desvio_cabeca || '';
-    const ombrosStr = Array.isArray(desvio_ombro) ? desvio_ombro.join(', ') : desvio_ombro || '';
-    const colunaStr = Array.isArray(desvio_coluna) ? desvio_coluna.join(', ') : desvio_coluna || '';
-    const pelveStr = Array.isArray(desvio_pelvis) ? desvio_pelvis.join(', ') : desvio_pelvis || '';
-    const mmiiStr = Array.isArray(desvio_mmii) ? desvio_mmii.join(', ') : desvio_mmii || '';
+    // Campos de desvios posturais (opcional, se não enviado ficam vazios)
+    const cabecaStr = req.body.desvio_cabeca ? (Array.isArray(req.body.desvio_cabeca) ? req.body.desvio_cabeca.join(', ') : req.body.desvio_cabeca) : '';
+    const ombrosStr = req.body.desvio_ombro ? (Array.isArray(req.body.desvio_ombro) ? req.body.desvio_ombro.join(', ') : req.body.desvio_ombro) : '';
+    const colunaStr = req.body.desvio_coluna ? (Array.isArray(req.body.desvio_coluna) ? req.body.desvio_coluna.join(', ') : req.body.desvio_coluna) : '';
+    const pelveStr = req.body.desvio_pelvis ? (Array.isArray(req.body.desvio_pelvis) ? req.body.desvio_pelvis.join(', ') : req.body.desvio_pelvis) : '';
+    const mmiiStr = req.body.desvio_mmii ? (Array.isArray(req.body.desvio_mmii) ? req.body.desvio_mmii.join(', ') : req.body.desvio_mmii) : '';
 
     const sql = `
         INSERT INTO analise_postural (
             imagem_frontal, imagem_lateral_direita, imagem_lateral_esquerda, imagem_costas,
             desvios_cabeca, desvios_ombros, desvios_coluna, desvios_pelve,
-            desvios_mmii, observacoes_postura, recomendacoes
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            desvios_mmii, observacoes_postura
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.run(sql, [
         imagens.frontal, imagens.lateral_direita, imagens.lateral_esquerda, imagens.costas,
-        cabecaStr, ombrosStr, colunaStr, pelveStr, mmiiStr, observacoes_postura, recomendacoes
+        cabecaStr, ombrosStr, colunaStr, pelveStr, mmiiStr, observacoes_postura
     ], function(err) {
         if (err) {
             console.error('Erro ao salvar análise postural:', err);
@@ -232,7 +231,52 @@ app.get('/api/cadastros', (req, res) => {
             return res.status(500).json({ error: 'Erro ao buscar dados' });
         }
 
+        console.log('Dados retornados para admin:', rows.length, 'cadastros');
+        if (rows.length > 0) {
+            console.log('Primeiro cadastro - treino_gerado:', rows[0].treino_gerado);
+        }
         res.json(rows);
+    });
+});
+
+// Rota para apagar cadastro incompleto
+app.delete('/api/cadastro/:id', (req, res) => {
+    const id = req.params.id;
+    
+    // Apagar dados pessoais (cascade vai apagar anamnese e postural)
+    const sql = 'DELETE FROM dados_pessoais WHERE id = ?';
+    
+    db.run(sql, [id], function(err) {
+        if (err) {
+            console.error('Erro ao apagar cadastro:', err);
+            return res.status(500).json({ error: 'Erro ao apagar cadastro' });
+        }
+        
+        res.json({ success: true, message: 'Cadastro apagado com sucesso' });
+    });
+});
+
+// Rota para apagar todos os cadastros incompletos
+app.delete('/api/cadastros-incompletos', (req, res) => {
+    console.log('Recebida requisição para apagar cadastros incompletos');
+    
+    const sql = `
+        DELETE FROM dados_pessoais 
+        WHERE id NOT IN (
+            SELECT dp.id FROM dados_pessoais dp
+            INNER JOIN anamnese a ON dp.id = a.id_pessoa
+            INNER JOIN analise_postural ap ON dp.id = ap.id_pessoa
+        )
+    `;
+    
+    db.run(sql, function(err) {
+        if (err) {
+            console.error('Erro ao apagar cadastros incompletos:', err);
+            return res.status(500).json({ error: 'Erro ao apagar cadastros incompletos' });
+        }
+        
+        console.log(`Sucesso: ${this.changes} cadastros incompletos apagados`);
+        res.json({ success: true, message: `${this.changes} cadastros incompletos apagados` });
     });
 });
 
@@ -337,6 +381,16 @@ app.post('/api/gerar-treino', async (req, res) => {
                     const resultado = await gerarTreino(dadosAvaliacao, apiKey);
 
                     if (resultado.sucesso) {
+                        // Marcar treino como gerado no banco de dados
+                        console.log('Tentando marcar treino como gerado para pessoa ID:', pessoal.id);
+                        db.run('UPDATE dados_pessoais SET treino_gerado = 1 WHERE id = ?', [pessoal.id], function(err) {
+                            if (err) {
+                                console.error('Erro ao marcar treino como gerado:', err);
+                            } else {
+                                console.log('Treino marcado como gerado para pessoa ID:', pessoal.id, 'Linhas afetadas:', this.changes);
+                            }
+                        });
+
                         res.json({
                             sucesso: true,
                             planoTreino: resultado.planoTreino,
@@ -359,6 +413,17 @@ app.post('/api/gerar-treino', async (req, res) => {
             erro: error.message
         });
     }
+});
+
+// Rota para verificar estrutura do banco e valor de treino_gerado
+app.get('/api/check-treino-gerado', (req, res) => {
+    db.all('SELECT id, nome, treino_gerado FROM dados_pessoais', [], (err, rows) => {
+        if (err) {
+            console.error('Erro ao verificar treino_gerado:', err);
+            return res.status(500).json({ error: 'Erro ao verificar dados' });
+        }
+        res.json(rows);
+    });
 });
 
 // Tratamento de erros do multer

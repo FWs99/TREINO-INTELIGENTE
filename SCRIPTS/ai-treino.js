@@ -37,7 +37,7 @@ async function gerarTreino(dadosAvaliacao, apiKey) {
             } catch (error) {
                 ultimoErro = error;
                 const mensagem = error.message || '';
-                const podeTentarProximo = mensagem.includes('Too Many Requests') || mensagem.includes('quota') || mensagem.includes('not found') || mensagem.includes('not found for API version v1');
+                const podeTentarProximo = mensagem.includes('Too Many Requests') || mensagem.includes('quota') || mensagem.includes('not found') || mensagem.includes('not found for API version v1') || mensagem.includes('Service Unavailable') || mensagem.includes('503');
                 console.warn(`Falha no modelo ${modelo}: ${mensagem}`);
                 if (!podeTentarProximo) {
                     throw error;
@@ -63,90 +63,98 @@ function construirPrompt(dados) {
     const { pessoal, anamnese, postural } = dados;
 
     const prompt = `
-Você é um profissional experiente em Educação Física e Treinamento Personalizado. 
-Com base na seguinte avaliação completa, crie um plano de treino detalhado e personalizado.
+Você é um profissional experiente em Educação Física. Gere um plano de treino CONCISO e DIRETO.
 
 === DADOS PESSOAIS ===
 Nome: ${pessoal.nome}
 Idade: ${pessoal.idade} anos
 Gênero: ${pessoal.genero}
-Altura: ${pessoal.altura} cm
-Peso: ${pessoal.peso} kg
+Altura: ${pessoal.altura}m
+Peso: ${pessoal.peso}kg
 Nível de Condicionamento: ${pessoal.nivel_condicionamento}
-${pessoal.imc ? `IMC: ${pessoal.imc.toFixed(1)}` : ''}
 
 === ANAMNESE ===
 Hábitos Alimentares: ${anamnese.habitos_alimentares || 'Não informado'}
 Consumo de Álcool: ${anamnese.consumo_alcool || 'Não informado'}
-Dores Atuais: ${anamnese.dores_atuais || 'Nenhuma'}
-Horas de Sono: ${anamnese.horas_sono || 'Não informado'}
+Dores/Limitações Atuais: ${anamnese.dores || 'Nenhuma'}
 Pressão Arterial: ${anamnese.pressao_arterial || 'Não informado'}
-Histórico Médico: ${anamnese.saude || 'Sem condições relatadas'}
-Condições Médicas: ${anamnese.condicoes || 'Nenhuma'}
-Objetivos: ${anamnese.objetivos_treino || 'Geral'}
+Descanso/Repouso: ${anamnese.descanso_repouso || 'Não informado'}
+Horas de Sono: ${anamnese.horas_sono || 'Não informado'}
+Sono Regular: ${anamnese.sono_regular || 'Não informado'}
+Dias de Treino por Semana: ${anamnese.dias_treino || '3'}
+Observações de Saúde: ${anamnese.observacoes_saude || 'Nenhuma'}
+Condições de Saúde: ${anamnese.condicoes_saude || 'Nenhuma'}
+Outras Doenças: ${anamnese.outras_doencas || 'Nenhuma'}
+Objetivos: ${anamnese.objetivos || 'Geral'}
+Restrições/Lesões: ${anamnese.restricoes_lesoes || 'Nenhuma'}
 
 === ANÁLISE POSTURAL ===
-Desvios na Cabeça: ${postural.desvios_cabeca || 'Normal'}
-Desvios nos Ombros: ${postural.desvios_ombros || 'Normal'}
-Desvios na Coluna: ${postural.desvios_coluna || 'Normal'}
-Desvios na Pelve: ${postural.desvios_pelve || 'Normal'}
-Desvios nos MMII: ${postural.desvios_mmii || 'Normal'}
-Observações: ${postural.observacoes_postura || 'Nenhuma'}
+Desvios da Cabeça: ${postural.desvios_cabeca || 'Normal'}
+Desvios dos Ombros: ${postural.desvios_ombros || 'Normal'}
+Desvios da Coluna: ${postural.desvios_coluna || 'Normal'}
+Desvios da Pelve: ${postural.desvios_pelve || 'Normal'}
+Desvios dos MMII: ${postural.desvios_mmii || 'Normal'}
+Observações Posturais: ${postural.observacoes_postura || 'Nenhuma'}
+Recomendações: ${postural.recomendacoes || 'Nenhuma'}
 
-=== INSTRUÇÕES PARA GERAR O TREINO ===
+=== ESTRUTURA DO TREINO (SIGA ESTA ORDEM EXATA) ===
 
-Com base nesses dados, por favor, gere um plano de treino SEGUINDO EXATAMENTE esta estrutura:
+=== METODOLOGIA DE TREINO (OBRIGATÓRIO SEGUIR) ===
 
-1. **ANÁLISE INICIAL:**
-   - Avalie o perfil geral (físico, médico, postural)
-   - Identifique as principais limitações e pontos fortes
-   - Considere fatores de risco
+**IDENTIFICAÇÃO DO NÍVEL:**
+- Iniciante: Nunca treinou ou menos de 6 meses de treino
+- Intermediário: 6 meses a 2 anos de treino
+- Avançado: Mais de 2 anos de treino
+- Atleta: Atleta profissional ou amador com alto nível de condicionamento
 
-2. **ESTRUTURA OBRIGATÓRIA DO TREINO (SEGUIR ORDEM EXATA):**
+**ESTRUTURA POR NÍVEL:**
+- Iniciante (Full Body): Crie treino A e treino B (alternar entre os dias)
+- Intermediário: Crie treino A, B e C (rotina de 3 dias)
+- Avançado: Crie treino A, B e C (rotina de 3 dias)
+- Atleta: Crie treino A, B, C e D (rotina de 4 dias com foco em performance)
 
-   **📋 ETAPA 1 - ALONGAMENTOS E AQUECIMENTO:**
-   - Alongamentos específicos para os desvios posturais identificados
-   - Exercícios de mobilidade articular
-   - Aquecimento cardiovascular leve (5-10 minutos)
-   - Para cada exercício: séries, repetições, tempo de manutenção
+**PARA CADA TREINO (A, B, C, D):**
+- Inclua exercícios de: Alongamentos + Treino Principal + Cardio
+- Adapte exercícios conforme desvios posturais e limitações
+- Para iniciante Full Body: adicione exercício complementar conforme dominância:
+  * Dominância Quadril: + Puxada (costas, bíceps)
+  * Dominância Joelho: + Empurrar (peito, tríceps, ombros)
+  * Dominância Quadríceps: + Costa
+  * Dominância Glúteo: + Peito
+  * 
+- Para Atleta
+  * Pliometria (saltos, drops, box jumps)
+  * Explosão (sprints, kettlebell swings, power cleans)
+  * Anti-rotação (pallof press, russian twists com carga, planks rotacionais)
+  * Força máxima (agachamentos, deadlifts, bench press, overhead press)
 
-   **📋 ETAPA 2 - MOBILIDADE ARTICULAR:**
-   - Exercícios de mobilidade para coluna, ombros e quadris
-   - Trabalho específico para as limitações encontradas
-   - Mobilidade funcional para atividades diárias
-   - Para cada exercício: séries, repetições, amplitude de movimento
+**1. ALONGAMENTOS E MOBILIDADE:**
+- 5-10 exercícios de alongamento e mobilidade
+- Para cada: nome, séries, repetições/tempo
+- Adapte para desvios posturais e limitações
 
-   **📋 ETAPA 3 - TREINO PRINCIPAL:**
-   - Exercícios de força focados nos objetivos
-   - Adaptações para os desvios posturais
-   - Treino respeitando as limitações médicas
-   - Para cada exercício: séries, repetições, carga, descanso
+**2. TREINO DO DIA:**
+- Exercícios de força principais
+- Para cada: nome, séries, repetições, carga, descanso
+- Cuidado com as limitações do aluno
 
-   **📋 ETAPA 4 - CARDIO FINAL:**
-   - Exercícios cardiovasculares ao final do treino
-   - Intensidade adequada ao nível de condicionamento
-   - Duração e frequência cardíaca alvo
-   - Opções de impacto baixo se houver dores articulares
+**3. CARDIO DO DIA:**
+- Exercício cardiovascular
+- Duração, intensidade, frequência cardíaca alvo
+- Adapte para dores articulares se necessário
 
-3. **PROGRESSÃO:**
-   - Como progredir cada etapa ao longo das semanas
-   - Quando aumentar intensidade em cada fase
-   - Quando mudar os exercícios
-
-4. **RECOMENDAÇÕES GERAIS:**
-   - Alimentação
-   - Hidratação
-   - Descanso e recuperação
-   - Suplementação (se necessário)
-   - Prevenção de lesões
-
-5. **ACOMPANHAMENTO:**
-   - Como medir progresso
-   - Quando fazer reavaliação
-
-**IMPORTANTE:** Siga RIGOROSAMENTE a ordem: Alongamentos → Mobilidade → Treino Principal → Cardio. Cada etapa deve ser claramente separada e detalhada.
-
-Forneça um plano detalhado, científico e personalizado seguindo esta estrutura exata.
+=== IMPORTANTE - PERSONALIZAÇÃO OBRIGATÓRIA ===
+- Seja CONCISO mas ESPECÍFICO para este aluno
+- Use o PESO (${pessoal.peso}kg) e ALTURA (${pessoal.altura}m) para calcular cargas apropriadas
+- Adapte cargas baseadas no NÍVEL (${pessoal.nivel_condicionamento})
+- FOQUE nos OBJETIVOS específicos: ${anamnese.objetivos || 'Geral'}
+- Use os DIAS DE TREINO (${anamnese.dias_treino || '3'}) para estruturar a rotina
+- Adapte exercícios para DESVIOS POSTURAIS específicos mencionados
+- Considere CONDIÇÕES MÉDICAS: ${anamnese.condicoes_saude || 'Nenhuma'}
+- Ajuste intensidade baseada na IDADE (${pessoal.idade} anos)
+- Para dores específicas (${anamnese.dores || 'Nenhuma'}), ofereça alternativas
+- NÃO use treinos genéricos - personalize para este aluno específico
+- NÃO inclua análises extensas, progressão detalhada ou recomendações gerais
 `;
 
     return prompt;

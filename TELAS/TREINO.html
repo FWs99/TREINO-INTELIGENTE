@@ -242,6 +242,11 @@
     </div>
 
     <script>
+        // Adicionar logo do usuário ao carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            adicionarLogoUsuario();
+        });
+
         // Salvar chave de API no localStorage (apenas cliente)
         function salvarChaveAPI() {
             const apiKey = document.getElementById('apiKey').value.trim();
@@ -285,9 +290,6 @@
                 if (resultado.sucesso) {
                     // Mostrar info da pessoa
                     document.getElementById('infoContainer').innerHTML = `
-                        <div class="success-message">
-                            ✅ Treino gerado com sucesso para ${resultado.dadosPessoa}!
-                        </div>
                         <div class="info-pessoa">
                             <h3>👤 Avaliação de: ${resultado.dadosPessoa}</h3>
                             <p>Data de geração: ${new Date(resultado.dataCriacao).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -297,7 +299,7 @@
                     // Mostrar treino formatado
                     const treinoHTML = formatarTreino(resultado.planoTreino);
                     container.innerHTML = `<div class="treino-content">${treinoHTML}</div>`;
-
+                    
                     // Ocultar config
                     document.getElementById('configSection').style.display = 'none';
                 } else {

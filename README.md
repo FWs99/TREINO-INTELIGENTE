@@ -44,7 +44,7 @@ Use `CHECKLIST.txt` para marcar cada passo.
 ## �📋 Funcionalidades
 
 ### Formulários Disponíveis:
-1. **Dados Pessoais** (HOME.html)
+1. **Dados Pessoais** (DADOS_PESSOAIS.html)
    - Nome, idade, gênero
    - Altura, peso, nível de condicionamento
 
@@ -86,7 +86,7 @@ Acesse `admin.html` para visualizar todos os cadastros:
 
 ```
 /
-├── HOME.html              # Página inicial (dados pessoais)
+├── DADOS_PESSOAIS.html              # Página inicial (dados pessoais)
 ├── ANAMNESE.html          # Formulário de anamnese
 ├── POSTURA.html           # Análise postural com upload
 ├── admin.html             # Painel administrativo

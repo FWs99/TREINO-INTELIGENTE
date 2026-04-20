@@ -10,6 +10,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             redirecionarSeNaoAutenticado();
+            adicionarLogoUsuario();
         });
     </script>
 </head>
@@ -33,47 +34,7 @@
             <input type="file" id="imagem_costas" name="imagem_costas" accept="image/*">
         </fieldset>
 
-        <fieldset class="section-group">
-            <legend>Desvios Posturais Identificados</legend>
-
-            <label>Região da Cabeça:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="desvio_cabeca" value="cabeca_avancada"> Cabeça Avançada</label>
-                <label><input type="checkbox" name="desvio_cabeca" value="inclinacao_lateral_direita"> Inclinação Lateral direita</label>
-                <label><input type="checkbox" name="desvio_cabeca" value="inclinacao_lateral_esquerda"> Inclinação Lateral esquerda</label>
-                <label><input type="checkbox" name="desvio_cabeca" value="torticolo"> Torcicolo</label>
-            </div>
-
-            <label>Região dos Ombros:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="desvio_ombro" value="ombros_elevados"> Ombros Elevados</label>
-                <label><input type="checkbox" name="desvio_ombro" value="ombros_assimétrico"> Ombros assimétrico</label>
-                <label><input type="checkbox" name="desvio_ombro" value="protacao"> Protação de Ombros</label>
-            </div>
-
-            <label>Coluna Vertebral:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="desvio_coluna" value="hiperlordose"> Hiperlordose (aumento lordose lombar)</label>
-                <label><input type="checkbox" name="desvio_coluna" value="hipocifose"> Hipocifose (diminuição cifose torácica)</label>
-                <label><input type="checkbox" name="desvio_coluna" value="escoliose"> Escoliose (desvio lateral)</label>
-                <label><input type="checkbox" name="desvio_coluna" value="cifose_dorsal"> Cifose Dorsal Aumentada</label>
-            </div>
-
-            <label>Região Pélvica:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="desvio_pelvis" value="antiversao"> Anteverssão Pélvica</label>
-                <label><input type="checkbox" name="desvio_pelvis" value="retro_verssao"> Retroversão Pélvica</label>
-                <label><input type="checkbox" name="desvio_pelvis" value="inclinacao_pelvis"> Inclinação Lateral da Pelve</label>
-            </div>
-
-            <label>Membros Inferiores:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="desvio_mmii" value="joelhos_valgo"> Joelhos em Valgo (X)</label>
-                <label><input type="checkbox" name="desvio_mmii" value="joelhos_varo"> Joelhos em Varo (O)</label>
-                <label><input type="checkbox" name="desvio_mmii" value="pes_plano"> Pés Planos</label>
-                <label><input type="checkbox" name="desvio_mmii" value="pes_cavo"> Pés Cavos</label>
-                <label><input type="checkbox" name="desvio_mmii" value="discrepancia_mmii"> Discrepância de Comprimento dos Membros</label>
-            </div>
+        
 
             <label for="observacoes_postura">Observações Adicionais:</label>
             <textarea id="observacoes_postura" name="observacoes_postura" rows="4" cols="50" placeholder="Descreva outros desvios posturais identificados ou observações importantes."></textarea>
@@ -81,9 +42,9 @@
 
         
 
-        <input type="submit" value="Enviar Análise Postural">
+        
         <div class="button-row">
-            <a class="button-link secondary" href="ANAMNESE.html">Voltar para Anamnese</a>
+            <button type="submit" class="button-link">Próximo: Treino</button>
         </div>
     </form>
 
@@ -105,8 +66,6 @@
                 console.log('Resposta do servidor (postura):', result);
 
                 if (result.success) {
-                    alert('Dados salvos com sucesso! Análise postural concluída.');
-                    
                     // Salvar progresso usando sistema de navegação
                     navegacao.salvarProgresso('postura', {});
                     console.log('Análise postural salva com sucesso!');

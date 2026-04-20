@@ -10,6 +10,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             redirecionarSeNaoAutenticado();
+            adicionarLogoUsuario();
         });
     </script>
 </head>
@@ -49,7 +50,7 @@
                 <option value="baixa">Baixa</option>
             </select>
 
-            <label for="repouso">Descanso / repouso diário:</label>
+            <label for="repouso">Horas de trabalho:</label>
             <input type="text" id="repouso" name="repouso" placeholder="Ex: 1h de pausa, descanso à noite">
 
             <label for="sono">Horas de sono por noite:</label>
@@ -66,12 +67,28 @@
         </fieldset>
 
         <fieldset class="section-group">
+            <legend>Disponibilidade de treino</legend>
+
+            <label for="dias_treino">Quantos dias por semana pretende treinar?</label>
+            <select id="dias_treino" name="dias_treino">
+                <option value="1">1 dia por semana</option>
+                <option value="2">2 dias por semana</option>
+                <option value="3" selected>3 dias por semana</option>
+                <option value="4">4 dias por semana</option>
+                <option value="5">5 dias por semana</option>
+                <option value="6">6 dias por semana</option>
+                <option value="7">7 dias por semana</option>
+            </select>
+        </fieldset>
+
+        <fieldset class="section-group">
             <legend>Condições de saúde</legend>
             <div class="checkbox-group">
                 <label><input type="checkbox" name="condicao" value="anemia"> Anemia</label>
                 <label><input type="checkbox" name="condicao" value="crise_respiratoria"> Crise respiratória</label>
                 <label><input type="checkbox" name="condicao" value="colesterol"> Colesterol</label>
-                <label><input type="checkbox" name="condicao" value="depressao_ansiedade"> Depressão / Ansiedade</label>
+                <label><input type="checkbox" name="condicao" value="ansiedade"> Ansiedade</label>
+                <label><input type="checkbox" name="condicao" value="depressao"> depressão</label>
                 <label><input type="checkbox" name="condicao" value="gastrite"> Gastrite</label>
                 <label><input type="checkbox" name="condicao" value="insonia"> Insônia</label>
                 <label><input type="checkbox" name="condicao" value="tensao_ombro_pescoco"> Tensão ombro/pescoço</label>
@@ -80,7 +97,7 @@
                 <label><input type="checkbox" name="condicao" value="varizes"> Varizes</label>
             </div>
 
-            <label for="outras_doencas">Outras doenças ou observações:</label>
+            <label for="outras_doencas">Outras doenças:</label>
             <textarea id="outras_doencas" name="outras_doencas" rows="4" cols="50" placeholder="Descreva outras doenças ou condições importantes."></textarea>
         </fieldset>
 
@@ -92,18 +109,15 @@
                 <label><input type="checkbox" name="objetivos" value="perda_peso"> Perda de peso</label>
                 <label><input type="checkbox" name="objetivos" value="hipertrofia"> Hipertrofia</label>
                 <label><input type="checkbox" name="objetivos" value="saude_qualidade_vida"> Saúde e qualidade de vida</label>
-                <label><input type="checkbox" name="objetivos" value="preparacao_atletismo_prova"> Preparação para atletismo/prova</label>
+                <label><input type="checkbox" name="objetivos" value="preparacao_atletismo_prova"> atleta</label>
             </div>
 
             <label for="condicoes">Restrição ou lesão:</label>
             <textarea id="condicoes" name="condicoes" rows="4" cols="50" placeholder="Mencione qualquer condição médica ou limitação."></textarea>
         </fieldset>
 
-        <input type="submit" value="Enviar Anamnese">
-        <div class="button-row">
-            <a class="button-link secondary" href="/HOME.html">Voltar para Dados Pessoais</a>
-            <a class="button-link" href="/POSTURA.html">Ir para Análise Postural</a>
-            <a class="button-link primary" href="/TREINO.html">Pular Postural e Gerar Treino</a>
+        <div class="button-row">  
+            <button type="submit" class="button-link">Próximo: Postural</button> 
         </div>
     </form>
 
@@ -127,6 +141,7 @@
                 sono: document.getElementById('sono').value,
                 sonoregular: document.getElementById('sonoregular').value,
                 saude: document.getElementById('saude').value,
+                dias_treino: document.getElementById('dias_treino').value,
                 condicao: getCheckedValues('condicao'),
                 outras_doencas: document.getElementById('outras_doencas').value,
                 objetivos: getCheckedValues('objetivos'),
